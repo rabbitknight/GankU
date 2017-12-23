@@ -14,7 +14,7 @@ public class Constants {
     public static final String API_COMMENT_SHORT = "http://news-at.zhihu.com/api/4/story/{}/short-comments";
     public static final String API_THEME = "http://news-at.zhihu.com/api/4/theme/{}";
 
-    public static final String GANK_IO = "http://gank.io/api";
+    public static final String GANK_IO = "http://gank.io/api/";
     //public static final String API_GNAK_HISTORY = "/day/history";
     //public static final String API_GANK_DAY = "/history/content/day";
     //public static final String API_GANK_DATA = "/data";

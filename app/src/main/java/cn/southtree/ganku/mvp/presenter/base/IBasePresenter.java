@@ -1,4 +1,6 @@
-package cn.southtree.ganku.mvp.presenter;
+package cn.southtree.ganku.mvp.presenter.base;
+
+import android.support.annotation.NonNull;
 
 import cn.southtree.ganku.mvp.view.base.IBaseView;
 
@@ -7,7 +9,7 @@ import cn.southtree.ganku.mvp.view.base.IBaseView;
  */
 
 public interface IBasePresenter<T extends IBaseView> {
-    void attachView(T view);
+    void attachView(@NonNull T view);
     void detachView();
-
+    void onCreate();
 }

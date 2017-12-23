@@ -19,7 +19,7 @@ public interface GankApiService {
      * @param page      页码
      * @return
      */
-    @GET("/data/{category}/{number}/{page}")
+    @GET("data/{type}/{number}/{page}")
     Observable<DataBean> getData(@Path("type")String category,@Path("number") int number,@Path("page")int page);
 
     /**
@@ -29,7 +29,7 @@ public interface GankApiService {
      * @param day 日
      * @return
      */
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Observable<DayBean> getDay(@Path("year")int year,@Path("month")int month,@Path("day")int day);
 
 

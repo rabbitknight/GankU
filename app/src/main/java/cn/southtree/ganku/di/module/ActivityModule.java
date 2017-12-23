@@ -6,7 +6,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by Southtree on 2017/11/15.
+ * @desc Dagger Activity的module
+ * @author rabbitknigt
+ * @createTime 2017/11/15
  */
 @Module
 public class ActivityModule {

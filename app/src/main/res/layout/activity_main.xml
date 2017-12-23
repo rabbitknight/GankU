@@ -8,17 +8,25 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffff">
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tv_main"
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:background="@color/colorMainRed">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11111111111111111111"
+                    android:textColor="#000000"
+                    android:textSize="20dp"/>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <FrameLayout
             android:id="@+id/content_main"
             android:layout_width="match_parent"
@@ -26,8 +34,10 @@
         </FrameLayout>
     </LinearLayout>
     <android.support.design.widget.NavigationView
-        android:id="@+id/nv_main"
-        android:layout_width="wrap_content"
+        android:id="@+id/nav_nv"
+        android:layout_gravity="start"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.design.widget.NavigationView>
+
 </android.support.v4.widget.DrawerLayout>

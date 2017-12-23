@@ -5,4 +5,5 @@ package cn.southtree.ganku.mvp.view.base;
  */
 
 public interface IBaseView {
+
 }

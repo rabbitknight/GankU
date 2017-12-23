@@ -8,11 +8,11 @@ import cn.southtree.ganku.mvp.view.ui.MainActivity;
 import dagger.Component;
 
 /**
- * Created by Southtree on 2017/11/15.
+ * @author rabbitknight
  */
 @PerApp
 @Component(dependencies = AppComponent.class,modules = ActivityModule.class)
 public interface ActivityComponent {
     Activity getActivity();
-    void inject(MainActivity mainActivity);
+    //void inject(MainActivity mainActivity);
 }
