@@ -11,7 +11,7 @@ import rx.Subscription;
 
 public abstract class BasePresenterImpl<T extends IBaseView> implements IBasePresenter {
     protected Subscription mSubscription;
-    private T view;
+    protected T view;
 
     @Override
     public void attachView(@NonNull IBaseView view) {
@@ -26,8 +26,4 @@ public abstract class BasePresenterImpl<T extends IBaseView> implements IBasePre
         }
     }
 
-    @Override
-    public void onCreate() {
-
-    }
 }

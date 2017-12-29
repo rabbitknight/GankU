@@ -7,13 +7,13 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 /**
- * @description gank.io的api
+ * @desc gank.io的api
  * @author rabbitknight
  */
 
 public interface GankApiService {
     /**
-     * @description 获取分类数据
+     * @desc 获取分类数据
      * @param category 分类
      * @param number    分页大小
      * @param page      页码
@@ -23,7 +23,7 @@ public interface GankApiService {
     Observable<DataBean> getData(@Path("type")String category,@Path("number") int number,@Path("page")int page);
 
     /**
-     * @description 获取每日数据
+     * @desc 获取每日数据
      * @param year 年
      * @param month 月
      * @param day 日

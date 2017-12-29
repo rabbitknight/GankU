@@ -20,5 +20,11 @@ public class Constants {
     //public static final String API_GANK_DATA = "/data";
     //public static final String API_GANK_SERACH = "/search/query/listview/category/Android/count/10/page/1";
 
+    public static final int APP = 1001;
+    public static final int ANDROID = 1002;
+    public static final int IOS = 1003;
+    public static final int WEB = 1004;
+    public static final int MEIZI = 1005;
+
 
 }

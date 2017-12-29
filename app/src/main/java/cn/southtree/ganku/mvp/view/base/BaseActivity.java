@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.di.component.AppComponent;
 import cn.southtree.ganku.di.module.ActivityModule;
@@ -21,15 +22,16 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
 public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatActivity {
     protected T mPresenter;         //注入presenter
     protected Activity mContext;    //当前环境上下文
+    protected Unbinder unbinder;
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
+        unbinder = ButterKnife.bind(this);
         mContext = this;
         setupActivityComponent(App.getmAppComponent(),new ActivityModule(this));
-        ButterKnife.bind(this);
         initViews();
     }
 
@@ -37,6 +39,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     protected void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) mPresenter.detachView();
+        unbinder.unbind();
     }
 
     //获取LayoutId：R.layout.id

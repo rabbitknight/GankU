@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.di.scope.PerApp;
-import cn.southtree.ganku.mvp.view.ui.MainActivity;
 import dagger.Component;
 
 /**

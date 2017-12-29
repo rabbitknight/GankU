@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/gp_group">
+        <item android:id="@+id/android_item"
+            android:title="Android"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_android"/>
+        <item android:id="@+id/ios_item"
+            android:title="IOS"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_ios"/>
+        <item android:id="@+id/web_item"
+            android:title="Web"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_web"/>
+        <item android:id="@+id/app_item"
+            android:title="App"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_app"/>
+        <item android:id="@+id/girl_item"
+            android:title="福利"
+            android:checkable="true"
+            android:checked="false"
+            android:icon="@drawable/ic_girl"/>
+    </group>
+
+</menu>

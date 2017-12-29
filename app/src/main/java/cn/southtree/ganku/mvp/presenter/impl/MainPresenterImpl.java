@@ -12,6 +12,8 @@ import cn.southtree.ganku.mvp.presenter.interfaces.MainPresenter;
  */
 
 public class MainPresenterImpl extends BasePresenterImpl implements MainPresenter {
+
+
     @Inject
     public MainPresenterImpl(){
 
@@ -29,6 +31,11 @@ public class MainPresenterImpl extends BasePresenterImpl implements MainPresente
 
     @Override
     public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onCreate() {
 
     }
 }
