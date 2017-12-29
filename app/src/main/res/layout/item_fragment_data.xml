@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="100dp"
+    android:background="@color/colorMainWhite">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -12,40 +13,54 @@
         >
         <TextView
             android:id="@+id/tv_desc"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="微信个人微信个人微信个"
-            android:textSize="20sp"
+            tools:text="微信个人微信个人微信个微信个人微信个人ss微信个微信ss个人微信个人微信个微信个Hhhhh"
+            android:textSize="15sp"
+            android:maxEms="20"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textColor="@color/colorMainDark"
             />
         <LinearLayout
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:paddingStart="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_owner64"
+                android:layout_margin="5dp"
+
+                />
             <TextView
                 android:id="@+id/tv_who"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:textColor="@color/colorTextLight"
                 tools:text="小茜茜"
                 android:gravity="center"
+                android:layout_marginRight="15dp"
+                />
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_time64"
+                android:layout_margin="5dp"
                 />
             <TextView
                 android:id="@+id/tv_time"
-                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
+                android:layout_height="match_parent"
+                android:textSize="12sp"
                 android:textColor="@color/colorTextLight"
                 tools:text="小茜茜"
                 android:gravity="center"
-
                 />
         </LinearLayout>
     </LinearLayout>
@@ -58,9 +73,10 @@
         android:gravity="center"
         >
         <ImageView
-            android:id="@+id/tv_img"
+            android:id="@+id/iv_img"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_launcher_round"

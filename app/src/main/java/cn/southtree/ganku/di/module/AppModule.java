@@ -7,8 +7,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * @description Dagger App的Module
+ * @desc Dagger App的Module
  * @author rabbitknight
+ * @createTime 2017/11/15
  */
 @Module
 public class AppModule {

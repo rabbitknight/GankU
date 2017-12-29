@@ -6,10 +6,11 @@
 
     <color name="colorMainRed">#D32F2F</color>
     <color name="colorLightRed">#F44336</color>
-    <color name="colorMainWhite">#ffffff</color>
+    <color name="colorMainWhite">#ffffffff</color>
     <color name="colorMainDark">#212122</color>
-    <color name="colorMainGray">#727272</color>
+    <color name="colorMainGray">#ff727272</color>
     <color name="colorTextDark">#212122</color>
     <color name="colorTextLight">#c0c0c0</color>
+    <color name="colorDividerGray">#f6f6f6</color>
 
 </resources>

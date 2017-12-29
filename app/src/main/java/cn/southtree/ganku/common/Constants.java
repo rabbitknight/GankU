@@ -14,11 +14,17 @@ public class Constants {
     public static final String API_COMMENT_SHORT = "http://news-at.zhihu.com/api/4/story/{}/short-comments";
     public static final String API_THEME = "http://news-at.zhihu.com/api/4/theme/{}";
 
-    public static final String GANK_IO = "http://gank.io/api";
+    public static final String GANK_IO = "http://gank.io/api/";
     //public static final String API_GNAK_HISTORY = "/day/history";
     //public static final String API_GANK_DAY = "/history/content/day";
     //public static final String API_GANK_DATA = "/data";
     //public static final String API_GANK_SERACH = "/search/query/listview/category/Android/count/10/page/1";
+
+    public static final int APP = 1001;
+    public static final int ANDROID = 1002;
+    public static final int IOS = 1003;
+    public static final int WEB = 1004;
+    public static final int MEIZI = 1005;
 
 
 }
