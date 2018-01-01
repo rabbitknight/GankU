@@ -1,5 +1,6 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,12 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +43,7 @@ import okhttp3.OkHttpClient;
 
 
 public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView, DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    private static final String TAG = "MainActivity";
     @Inject
     public OkHttpClient okHttpClient;
     @Inject
@@ -46,6 +53,8 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     TabLayout tabTl;
     @BindView(R.id.tool_ctl)
     CollapsingToolbarLayout toolCtl;
+    @BindView(R.id.girl_iv)
+    ImageView girlIv;
     @BindView(R.id.appbar_apl)
     AppBarLayout appbarApl;
     @BindView(R.id.content_vp)
@@ -92,6 +101,13 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     protected void initViews() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
         //tab
         tabs.put(Constants.APP,true);
         tabs.put(Constants.ANDROID,true);
@@ -103,6 +119,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         mPresenter.attachView(this);
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs);
         contentVp.setAdapter(mAdapter);
+        contentVp.setOffscreenPageLimit(5);
         //
         tabTl.setupWithViewPager(contentVp);
         //drawer
@@ -156,6 +173,11 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     @Override
     public void onDrawerClosed(View drawerView) {
         mAdapter.notifyDataSetChanged();
+        String girlUrl = App.getmSahre().getString("meizi","");
+        if (!girlUrl.equals("")){
+            Log.i(TAG, "initViews: "+girlUrl);
+            Glide.with(this).load(girlUrl).apply(new RequestOptions().centerCrop()).into(girlIv);
+        }
 
     }
 

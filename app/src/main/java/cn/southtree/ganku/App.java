@@ -1,6 +1,7 @@
 package cn.southtree.ganku;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import javax.inject.Inject;
 
@@ -21,6 +22,7 @@ import cn.southtree.ganku.net.api.GankApiService;
 public class App extends Application {
     private static App appContext;              //整个APP的上下文环境
     private static AppComponent mAppComponent;  //整个APP管理的Component
+    private static SharedPreferences mSahre;
     @Inject
     GankApiService gankApiService;
     public static App getAppContext() {
@@ -34,6 +36,10 @@ public class App extends Application {
         return gankApiService;
     }
 
+    public static SharedPreferences getmSahre(){
+        return mSahre;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -44,5 +50,6 @@ public class App extends Application {
                 .httpModule(new HttpModule(Constants.GANK_IO))
                 .build();
         mAppComponent.inject(this);
+        mSahre = getSharedPreferences("img",MODE_PRIVATE);
     }
 }

@@ -109,8 +109,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
             mAdapter.enableMeizi(true);
         }else{
             listRv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            listRv.addItemDecoration(new MItemDecoration(mContext));
         }
-        listRv.addItemDecoration(new MItemDecoration(mContext));
         listRv.setAdapter(mAdapter);
         loadMoreListener = new ListLoadMoreListener(listRv.getLayoutManager());
         loadMoreListener.addOnLoadMoreListener(this);

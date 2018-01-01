@@ -59,12 +59,12 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
 
         }else if(mLayoutManager instanceof StaggeredGridLayoutManager){
             ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(lasts);
-            lastVisibleItemPosition = lasts[1];
-            Log.i(TAG, "onScrolled: "+lasts);
+            lastVisibleItemPosition = Math.max(lasts[1],lasts[0]);
+            totalItemCount = mLayoutManager.getItemCount();
         }else {
             return;
         }
-
+        Log.i(TAG, "onScrolled: "+lastVisibleItemPosition+"，totalItem="+totalItemCount);
         if (lastVisibleItemPosition + 1 == totalItemCount&&!isLoading){
             defaultOnLaodMoreListener.loadMore(currentPage);
             currentPage++;

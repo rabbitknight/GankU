@@ -1,5 +1,7 @@
 package cn.southtree.ganku.mvp.presenter.impl;
 
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -52,6 +54,7 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                     @Override
                     public void onNext(DataBean dataBean) {
                         view.setList(dataBean.results,true);
+
                     }
 
                     @Override
@@ -86,6 +89,13 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                     @Override
                     public void onNext(DataBean dataBean) {
                         view.setList(dataBean.results,false);
+                        String url = App.getmSahre().getString("meizi","");
+                        if (TextUtils.equals(type,"福利")&&!url.equals(dataBean.results.get(1).getUrl())){
+                            SharedPreferences.Editor editor = App.getmSahre().edit();
+                            editor.putString("meizi",dataBean.results.get(1).getUrl());
+                            editor.apply();
+                            Log.i(TAG, "onNext: "+App.getmSahre().getString("meizi",""));
+                        }
                     }
 
                     @Override

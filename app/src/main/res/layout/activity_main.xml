@@ -22,12 +22,19 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/tool_ctl"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="230dp"
                 android:minHeight="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:contentScrim="@color/colorMainGray"
                 android:fitsSystemWindows="true"
                 >
+                <ImageView
+                    android:fitsSystemWindows="true"
+                    android:clipToPadding="true"
+                    android:id="@+id/girl_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="@style/ToolbarStyle"
@@ -35,6 +42,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="bottom"
                     app:layout_collapseMode="pin"
+                    android:layout_marginTop="25dp"
                     >
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tab_tl"
