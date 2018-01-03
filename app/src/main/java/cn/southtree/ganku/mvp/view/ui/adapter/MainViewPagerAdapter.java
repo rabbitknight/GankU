@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.southtree.ganku.common.Constants;
+import cn.southtree.ganku.mvp.view.ui.activity.MainActivity;
 import cn.southtree.ganku.mvp.view.ui.fragment.MainPagerFragment;
 
 /**
@@ -31,16 +32,20 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     private SparseArray<Fragment> fragments = new SparseArray<>();    //id为常量
 
     private SparseBooleanArray tabs = new SparseBooleanArray();  //tab[0]->{fragment's name}
+    private MainActivity mActivity;
 
     @Override
     public CharSequence getPageTitle(int position) {
         return getName(position);
     }
 
-    public MainViewPagerAdapter(FragmentManager fm,SparseBooleanArray tabs) {
+    public MainViewPagerAdapter(FragmentManager fm,SparseBooleanArray tabs,MainActivity mainActivity) {
         super(fm);
         if (tabs!=null){
             this.tabs = tabs;
+        }
+        if (mainActivity!=null){
+            this.mActivity = mainActivity;
         }
 
     }
@@ -69,6 +74,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             args.putInt("pageType",tabs.keyAt(position));
             Log.i(TAG, "getItem: "+tabs.keyAt(position));
             mainPagerFragment.setArguments(args);
+            mainPagerFragment.setOnFrag2ActivityCallBack(mActivity);
             fragments.put(id,mainPagerFragment);
         }
         return fragments.get(id);

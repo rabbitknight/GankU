@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -39,10 +40,12 @@ import cn.southtree.ganku.mvp.presenter.impl.MainPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseActivity;
 import cn.southtree.ganku.mvp.view.interfaces.MainView;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainViewPagerAdapter;
+import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import okhttp3.OkHttpClient;
 
 
-public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView, DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView,
+        DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,OnFrag2ActivityCallBack{
     private static final String TAG = "MainActivity";
     @Inject
     public OkHttpClient okHttpClient;
@@ -86,7 +89,9 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     private App app;
     private SparseBooleanArray tabs = new SparseBooleanArray();
+    private SparseBooleanArray tabs_temp = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
+    private boolean isChanged = false;
 
 
     @Override
@@ -101,6 +106,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     protected void initViews() {
+        //透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -114,10 +120,9 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         tabs.put(Constants.IOS,true);
         tabs.put(Constants.WEB,true);
         tabs.put(Constants.MEIZI,true);
-
         mPresenter = mainPresenter;
         mPresenter.attachView(this);
-        mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs);
+        mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs,this);
         contentVp.setAdapter(mAdapter);
         contentVp.setOffscreenPageLimit(5);
         //
@@ -134,10 +139,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     }
 
-    @Override
-    public void setList(List<GankBean> gankBeans, boolean isAdd) {
 
-    }
 
     @Override
     public void showProcess() {
@@ -146,16 +148,6 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     public void dismissProcess() {
-
-    }
-
-    @Override
-    public void setCurrentPage(int currentPage) {
-
-    }
-
-    @Override
-    public void setIsLoading(boolean isLoading) {
 
     }
 
@@ -172,13 +164,11 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        mAdapter.notifyDataSetChanged();
-        String girlUrl = App.getmSahre().getString("meizi","");
-        if (!girlUrl.equals("")){
-            Log.i(TAG, "initViews: "+girlUrl);
-            Glide.with(this).load(girlUrl).apply(new RequestOptions().centerCrop()).into(girlIv);
+        if (isChanged){
+            mAdapter.notifyDataSetChanged();
         }
 
+        isChanged = false;
     }
 
     @Override
@@ -188,9 +178,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
 
-        }
     }
 
     @Override
@@ -198,40 +186,77 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         switch (buttonView.getId()){
             case R.id.and_cb:
                 if (isChecked) {
-                    tabs.put(Constants.ANDROID, true);
+                    if (tabs.get(Constants.ANDROID,false)){
+
+                    }else {
+                        tabs.put(Constants.ANDROID, true);
+                        isChanged = true;
+                    }
+
                 } else {
                     tabs.delete(Constants.ANDROID);
+                    isChanged = true;
                 }
                 break;
             case R.id.app_cb:
                 if (isChecked) {
-                    tabs.put(Constants.APP, true);
+                    if (tabs.get(Constants.APP,false)){
+
+                    } else {
+                        tabs.put(Constants.APP, true);
+                        isChanged = true;
+                    }
                 } else {
                     tabs.delete(Constants.APP);
+                    isChanged = true;
                 }
                 break;
             case R.id.girl_cb:
                 if (isChecked) {
-                    tabs.put(Constants.MEIZI, true);
+                    if (tabs.get(Constants.MEIZI,false)){
+
+                    }else {
+                        tabs.put(Constants.MEIZI,true);
+                        isChanged = true;
+                    }
                 } else {
                     tabs.delete(Constants.MEIZI);
                 }
                 break;
             case R.id.ios_cb:
                 if (isChecked) {
-                    tabs.put(Constants.IOS, true);
+                    if (tabs.get(Constants.IOS, false)){
+
+                    }else {
+                        tabs.put(Constants.IOS, true);
+                        isChanged = true;
+                    }
                 } else {
                     tabs.delete(Constants.IOS);
+                    isChanged = true;
                 }
                 break;
             case R.id.web_cb:
                 if (isChecked) {
-                    tabs.put(Constants.WEB, true);
+                    if (tabs.get(Constants.WEB,false)){
+
+                    } else {
+                        tabs.put(Constants.WEB, true);
+                        isChanged = true;
+                    }
                 } else {
                     tabs.delete(Constants.WEB);
+                    isChanged = true;
+
                 }
                 break;
             default:break;
         }
+    }
+
+    @Override
+    public void setMeizi() {
+        mainPresenter.updateMeizi(bgIv);
+        mainPresenter.updateMeizi(girlIv);
     }
 }

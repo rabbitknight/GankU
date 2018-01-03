@@ -38,7 +38,6 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
     };
     public void addOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
         this.defaultOnLaodMoreListener = onLoadMoreListener;
-        Drawable drawable;
     }
     @Inject
     public ListLoadMoreListener(RecyclerView.LayoutManager layoutManager) {
@@ -64,7 +63,6 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
         }else {
             return;
         }
-        Log.i(TAG, "onScrolled: "+lastVisibleItemPosition+"，totalItem="+totalItemCount);
         if (lastVisibleItemPosition + 1 == totalItemCount&&!isLoading){
             defaultOnLaodMoreListener.loadMore(currentPage);
             currentPage++;

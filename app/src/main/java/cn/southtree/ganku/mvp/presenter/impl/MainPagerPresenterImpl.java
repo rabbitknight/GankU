@@ -90,11 +90,17 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                     public void onNext(DataBean dataBean) {
                         view.setList(dataBean.results,false);
                         String url = App.getmSahre().getString("meizi","");
-                        if (TextUtils.equals(type,"福利")&&!url.equals(dataBean.results.get(1).getUrl())){
-                            SharedPreferences.Editor editor = App.getmSahre().edit();
-                            editor.putString("meizi",dataBean.results.get(1).getUrl());
-                            editor.apply();
-                            Log.i(TAG, "onNext: "+App.getmSahre().getString("meizi",""));
+                        if (TextUtils.equals(type,"福利")){
+                            if (url.equals(dataBean.results.get(0).getUrl())){
+
+                            }else {
+                                SharedPreferences.Editor editor = App.getmSahre().edit();
+                                editor.putString("meizi",dataBean.results.get(0).getUrl());
+                                editor.apply();
+                            }
+
+                            view.callBack.setMeizi();
+
                         }
                     }
 

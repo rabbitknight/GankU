@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:minHeight="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlways"
                 app:contentScrim="@color/colorMainGray"
                 android:fitsSystemWindows="true"
                 >
@@ -66,15 +66,7 @@
         </android.support.v4.view.ViewPager>
 
     </android.support.design.widget.CoordinatorLayout>
-<!--    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_nv"
-        android:layout_gravity="start"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:headerLayout="@laynav_contentader"
-        app:menu="@menu/nav_menu"
-        >
-    </android.support.design.widget.NavigationView>-->
+
     <FrameLayout
         android:id="@+id/nav_fl"
         android:layout_width="match_parent"

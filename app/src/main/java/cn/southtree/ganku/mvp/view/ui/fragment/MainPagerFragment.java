@@ -2,7 +2,6 @@ package cn.southtree.ganku.mvp.view.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +21,10 @@ import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.mvp.model.remote.GankBean;
 import cn.southtree.ganku.mvp.presenter.impl.MainPagerPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseFragment;
-import cn.southtree.ganku.mvp.view.interfaces.MainView;
+import cn.southtree.ganku.mvp.view.interfaces.MainPagerView;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainListAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.ListLoadMoreListener;
+import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnItemClickListener;
 import cn.southtree.ganku.mvp.view.ui.widget.MItemDecoration;
 import cn.southtree.ganku.utils.ToastUtil;
@@ -33,7 +33,7 @@ import cn.southtree.ganku.utils.ToastUtil;
  * Created by zhuo.chen on 2017/12/26.
  */
 
-public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainView,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener{
+public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerView,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener{
     //常量
     private static final String TAG = "MainPagerFragment";
     //变量
@@ -54,9 +54,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     //
     private MainListAdapter mAdapter;
     private ListLoadMoreListener loadMoreListener;
-    //private int currentPage = 1;
-
-    //Construct Method
+    public OnFrag2ActivityCallBack callBack;
 
 
     //获取页面布局
@@ -123,6 +121,9 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
 
     }
 
+    public void setOnFrag2ActivityCallBack(OnFrag2ActivityCallBack listener){
+        this.callBack = listener;
+    }
 
     @Override
     public void onRefresh() {
@@ -176,4 +177,5 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     public void loadMore(int currentPage) {
         presenter.loadMore(currentPage,pageType);
     }
+
 }

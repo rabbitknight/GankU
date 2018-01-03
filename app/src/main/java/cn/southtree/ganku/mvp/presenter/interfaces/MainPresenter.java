@@ -1,6 +1,7 @@
 package cn.southtree.ganku.mvp.presenter.interfaces;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
 
@@ -13,5 +14,6 @@ public interface MainPresenter extends IBasePresenter {
     void onRefresh();
     void onLoadMore();
     void onClick(View view);
+    void updateMeizi(ImageView view);
 
 }
