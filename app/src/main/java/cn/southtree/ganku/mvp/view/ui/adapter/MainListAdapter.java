@@ -2,6 +2,7 @@ package cn.southtree.ganku.mvp.view.ui.adapter;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.mvp.model.remote.GankBean;
+import cn.southtree.ganku.mvp.view.ui.activity.TestActivity;
 import cn.southtree.ganku.mvp.view.ui.listener.OnItemClickListener;
+import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
 import cn.southtree.ganku.utils.StringUtil;
 import dagger.Component;
 
@@ -52,6 +55,9 @@ public class MainListAdapter extends RecyclerView.Adapter {
             this.data = data;
             notifyDataSetChanged();
         }
+    }
+    public List<GankBean> getData(){
+        return data;
     }
     public void addData(List<GankBean> data) {
         int temp = this.data.size();
@@ -125,6 +131,19 @@ public class MainListAdapter extends RecyclerView.Adapter {
                             .load(data.get(position).getUrl())
                             .apply(new RequestOptions().centerCrop())
                             .into(((MeiziViewHolder)holder).iv);
+
+/*                    ((MeiziViewHolder) holder).iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            context.startActivity(new Intent(context, TestActivity.class).putExtra("meizi",data.get(position).getUrl()));
+                        }
+                    });*/
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onItemClickListener.onClick(v,position);
+                        }
+                    });
                 }
             }else {
                 if (!StringUtil.isNull(data.get(position).getDesc())){

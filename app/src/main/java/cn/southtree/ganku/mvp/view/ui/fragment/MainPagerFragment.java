@@ -2,11 +2,19 @@ package cn.southtree.ganku.mvp.view.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +34,7 @@ import cn.southtree.ganku.mvp.view.ui.adapter.MainListAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.ListLoadMoreListener;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnItemClickListener;
+import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
 import cn.southtree.ganku.mvp.view.ui.widget.MItemDecoration;
 import cn.southtree.ganku.utils.ToastUtil;
 
@@ -55,6 +64,12 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     private MainListAdapter mAdapter;
     private ListLoadMoreListener loadMoreListener;
     public OnFrag2ActivityCallBack callBack;
+    private AlertDialog girlDialog;
+    private View content;
+    private ImageView img;
+    private ImageViewWrap imageViewWrap;
+    private FrameLayout.LayoutParams params;
+
 
 
     //获取页面布局
@@ -118,6 +133,14 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         snapHelper.attachToRecyclerView(listRv);
         //
         onRefresh();
+        girlDialog = new AlertDialog.Builder(mContext).create();
+        content = LayoutInflater.from(mContext).inflate(R.layout.item_browser_img,null);
+        img = content.findViewById(R.id.img_iv);
+        imageViewWrap = new ImageViewWrap(img);
+        //params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+
+
 
     }
 
@@ -136,6 +159,13 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     public void onClick(View view, int position) {
         // TODO: 2017/12/27 子item点击
         ToastUtil.showToast(mContext,"onclick:"+position);
+        if (pageType.equals("福利")){
+            Glide.with(mContext).load(mAdapter.getData().get(position).getUrl()).into(imageViewWrap.getInstance());
+            //girlDialog.setContentView(content,params);
+            girlDialog.setView(content);
+            girlDialog.show();
+        }
+
     }
 
     @Override

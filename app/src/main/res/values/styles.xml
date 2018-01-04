@@ -12,7 +12,8 @@
     <style name="ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
     </style>
-    <style name="CheckBoxStyle" >
+
+    <style name="CheckBoxStyle">
         <item name="android:button">@drawable/style_checkbox</item>
     </style>
 

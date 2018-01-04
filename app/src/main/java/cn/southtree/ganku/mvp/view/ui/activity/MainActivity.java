@@ -1,41 +1,33 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
 import cn.southtree.ganku.di.component.AppComponent;
 import cn.southtree.ganku.di.module.ActivityModule;
-import cn.southtree.ganku.mvp.model.remote.GankBean;
 import cn.southtree.ganku.mvp.presenter.impl.MainPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseActivity;
 import cn.southtree.ganku.mvp.view.interfaces.MainView;
@@ -87,11 +79,13 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     @BindView(R.id.girl_cb)
     AppCompatCheckBox girlCb;
 
+
     private App app;
     private SparseBooleanArray tabs = new SparseBooleanArray();
     private SparseBooleanArray tabs_temp = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
+
 
 
     @Override
@@ -135,6 +129,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         girlCb.setOnCheckedChangeListener(this);
         iosCb.setOnCheckedChangeListener(this);
         webCb.setOnCheckedChangeListener(this);
+        //
 
 
     }
@@ -221,6 +216,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
                     }
                 } else {
                     tabs.delete(Constants.MEIZI);
+                    isChanged = true;
                 }
                 break;
             case R.id.ios_cb:

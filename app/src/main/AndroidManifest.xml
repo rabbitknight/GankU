@@ -24,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".mvp.view.ui.activity.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

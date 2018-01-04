@@ -12,5 +12,7 @@
     <color name="colorTextDark">#212122</color>
     <color name="colorTextLight">#c0c0c0</color>
     <color name="colorDividerGray">#f6f6f6</color>
+    <color name="colorAlpha">#00000000</color>
+
 
 </resources>
