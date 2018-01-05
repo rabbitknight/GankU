@@ -156,7 +156,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
                     ((ItemViewHolder)holder).tvTime.setText(StringUtil.strDate2str(data.get(position).getPublishedAt()));
                 }
                 if (data.get(position).getImages()!=null&&data.get(position).getImages().size()!=0){
-                    Glide.with(context).load(data.get(position).getImages().get(0)).into(((ItemViewHolder)holder).tvImg);
+                    Glide.with(context).load(data.get(position).getImages().get(0)).thumbnail(0.1f).into(((ItemViewHolder)holder).tvImg);
                 }else {
                     ((ItemViewHolder)holder).rlImg.setVisibility(View.GONE);
                 }

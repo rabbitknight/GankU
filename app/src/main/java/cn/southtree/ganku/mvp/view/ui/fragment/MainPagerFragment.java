@@ -1,5 +1,6 @@
 package cn.southtree.ganku.mvp.view.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,6 +33,7 @@ import cn.southtree.ganku.mvp.model.remote.GankBean;
 import cn.southtree.ganku.mvp.presenter.impl.MainPagerPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseFragment;
 import cn.southtree.ganku.mvp.view.interfaces.MainPagerView;
+import cn.southtree.ganku.mvp.view.ui.activity.WebActivity;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainListAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.ListLoadMoreListener;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
@@ -42,7 +46,7 @@ import cn.southtree.ganku.utils.ToastUtil;
  * Created by zhuo.chen on 2017/12/26.
  */
 
-public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerView,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener{
+public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerView,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener,View.OnClickListener{
     //常量
     private static final String TAG = "MainPagerFragment";
     //变量
@@ -67,8 +71,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     private AlertDialog girlDialog;
     private View content;
     private ImageView img;
+    private Button btn;
     private ImageViewWrap imageViewWrap;
-    private FrameLayout.LayoutParams params;
 
 
 
@@ -134,11 +138,11 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         //
         onRefresh();
         girlDialog = new AlertDialog.Builder(mContext).create();
+
         content = LayoutInflater.from(mContext).inflate(R.layout.item_browser_img,null);
         img = content.findViewById(R.id.img_iv);
-        imageViewWrap = new ImageViewWrap(img);
-        //params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
+        btn = content.findViewById(R.id.close_btn);
+        btn.setOnClickListener(this);
 
 
 
@@ -160,10 +164,17 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         // TODO: 2017/12/27 子item点击
         ToastUtil.showToast(mContext,"onclick:"+position);
         if (pageType.equals("福利")){
-            Glide.with(mContext).load(mAdapter.getData().get(position).getUrl()).into(imageViewWrap.getInstance());
+            imageViewWrap = new ImageViewWrap(img);
+            Glide.with(mContext).load(mAdapter.getData().get(position).getUrl()).thumbnail(0.5f).into(imageViewWrap.getInstance());
             //girlDialog.setContentView(content,params);
             girlDialog.setView(content);
             girlDialog.show();
+        }
+        else {
+            startActivity(new Intent(mContext, WebActivity.class)
+                    .putExtra("url",mAdapter.getData().get(position).getUrl())
+                    .putExtra("name",mAdapter.getData().get(position).getDesc())
+            );
         }
 
     }
@@ -208,4 +219,15 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         presenter.loadMore(currentPage,pageType);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.close_btn:
+                if (girlDialog.isShowing()){
+                    girlDialog.dismiss();
+                }
+                break;
+                default:break;
+        }
+    }
 }
