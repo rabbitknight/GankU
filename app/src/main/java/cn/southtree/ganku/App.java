@@ -1,12 +1,23 @@
 package cn.southtree.ganku;
 
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.nfc.Tag;
+import android.support.customtabs.CustomTabsCallback;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
 import android.util.Log;
 
 import com.tencent.smtt.sdk.QbSdk;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,9 +38,24 @@ public class App extends Application {
     private static App appContext;              //整个APP的上下文环境
     private static AppComponent mAppComponent;  //整个APP管理的Component
     private static SharedPreferences mSahre;
+    public static boolean canChromeLoad;
 
     @Inject
     GankApiService gankApiService;
+
+    @Deprecated
+    // TODO: 2018/1/6 方法无效
+    private void hasChrome() {
+        String packageName = "com.android.chrome";
+        Intent browserIntent = new Intent();
+        browserIntent.setPackage(packageName);
+        List<ResolveInfo> activitiesList = getPackageManager().queryIntentActivities(
+                browserIntent, -1);
+        if(activitiesList.size() > 0) {
+            canChromeLoad = true;
+        }
+    }
+
     public static App getAppContext() {
         return appContext;
     }
@@ -70,6 +96,10 @@ public class App extends Application {
                 .build();
         mAppComponent.inject(this);
         mSahre = getSharedPreferences("img",MODE_PRIVATE);
+
+        hasChrome();
+        if (canChromeLoad)
+            CustomTabsClient.connectAndInitialize(this, "com.android.chrome");
 
     }
 }

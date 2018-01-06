@@ -1,6 +1,15 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.support.customtabs.CustomTabsCallback;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,6 +51,11 @@ import okhttp3.OkHttpClient;
 public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView,
         DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,OnFrag2ActivityCallBack{
     private static final String TAG = "MainActivity";
+
+    private SparseBooleanArray tabs = new SparseBooleanArray();
+    private MainViewPagerAdapter mAdapter;
+    private boolean isChanged = false;
+
     @Inject
     public OkHttpClient okHttpClient;
     @Inject
@@ -80,11 +96,6 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     @BindView(R.id.girl_cb)
     AppCompatCheckBox girlCb;
 
-    private App app;
-    private SparseBooleanArray tabs = new SparseBooleanArray();
-    private SparseBooleanArray tabs_temp = new SparseBooleanArray();
-    private MainViewPagerAdapter mAdapter;
-    private boolean isChanged = false;
 
     @Override
     protected int getLayout() {
@@ -127,7 +138,6 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         iosCb.setOnCheckedChangeListener(this);
         webCb.setOnCheckedChangeListener(this);
         //
-
 
     }
 

@@ -2,6 +2,9 @@ package cn.southtree.ganku.mvp.presenter.impl;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -125,9 +128,13 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
             if (pageType.equals("福利")){
                 this.view.showGirl(this.view.getGankBeans().get(position).getUrl());
             } else {
-                this.view.doJump(new Intent(this.view.getContext(), WebActivity.class)
-                        .putExtra("url",this.view.getGankBeans().get(position).getUrl())
-                        .putExtra("name",this.view.getGankBeans().get(position).getDesc()));
+                if (App.canChromeLoad){
+                    launchUrl(this.view.getGankBeans().get(position).getUrl());
+                }else {
+                    this.view.doJump(new Intent(this.view.getContext(), WebActivity.class)
+                            .putExtra("url",this.view.getGankBeans().get(position).getUrl())
+                            .putExtra("name",this.view.getGankBeans().get(position).getDesc()));
+                }
             }
         } else {
             switch (view.getId()){
@@ -135,7 +142,13 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                     this.view.closeGirl();
             }
         }
+    }
 
+    private void launchUrl(String url) {
+        CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
+        intentBuilder.setToolbarColor(ContextCompat.getColor(view.getContext(),R.color.colorMainDark));
+        CustomTabsIntent intent = intentBuilder.build();
+        intent.launchUrl(view.getContext(), Uri.parse(url));
     }
 
     @Override
@@ -147,5 +160,6 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
     public void onCreate() {
         view.getmComponent().inject(this);
     }
+
 
 }

@@ -69,10 +69,7 @@ public class WebActivity extends BaseActivity {
             x5webWv.loadUrl(loadUrl);
 
         }
-        CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
-        intentBuilder.setToolbarColor(ContextCompat.getColor(this,R.color.colorMainDark));
-        CustomTabsIntent intent = intentBuilder.build();
-        intent.launchUrl(this, Uri.parse(loadUrl));
+
         x5webWv.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
