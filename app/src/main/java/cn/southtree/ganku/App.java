@@ -2,6 +2,10 @@ package cn.southtree.ganku;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.nfc.Tag;
+import android.util.Log;
+
+import com.tencent.smtt.sdk.QbSdk;
 
 import javax.inject.Inject;
 
@@ -20,6 +24,7 @@ import cn.southtree.ganku.net.api.GankApiService;
  */
 
 public class App extends Application {
+    private static final String TAG = App.class.getSimpleName();
     private static App appContext;              //整个APP的上下文环境
     private static AppComponent mAppComponent;  //整个APP管理的Component
     private static SharedPreferences mSahre;
@@ -43,7 +48,21 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                Log.i(TAG, "onCoreInitFinished: ");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+                Log.i(TAG, "onViewInitFinished: "+b);
+
+            }
+        };
         appContext = this;
+        QbSdk.initX5Environment(appContext,cb);
+        QbSdk.setDownloadWithoutWifi(true);
         mAppComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
@@ -51,5 +70,6 @@ public class App extends Application {
                 .build();
         mAppComponent.inject(this);
         mSahre = getSharedPreferences("img",MODE_PRIVATE);
+
     }
 }
