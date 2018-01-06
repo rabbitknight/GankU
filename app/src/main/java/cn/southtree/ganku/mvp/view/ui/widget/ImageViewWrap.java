@@ -27,23 +27,21 @@ import java.lang.ref.WeakReference;
 public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnTouchListener,
         ScaleGestureDetector.OnScaleGestureListener,ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = ImageViewWrap.class.getSimpleName();
-
     private static final float SCALE_MAX = 4.0f;    //放大的系数
     private static float initScale = 1.0f;          //初始化的放大倍数
     private final float[] matrixValues = new float[9];  //矩阵信息数组
+
     private Matrix matrix = new Matrix();
-
-
     private ImageView img;
     private WeakReference<Context> context;
     private GestureDetector mDetector;
     private ScaleGestureDetector mScaleDetector;
+    private int lastPointerCount = 0;
     private float mLastX = 0;
     private float mLastY = 0;
-    private boolean once = true;
-    private int lastPointerCount = 0;
-    private boolean isCanDrag = false;
     private float mTouchSlop;
+    private boolean once = true;
+    private boolean isCanDrag = false;
     private boolean isCheckTopAndBottom;
     private boolean isCheckLeftAndRight;
 
@@ -166,7 +164,6 @@ public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnT
         return false;
 
     }
-
 
     // 以下为收缩的方法回调
     @Override
@@ -306,11 +303,7 @@ public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnT
         matrix.postTranslate(deltaX, deltaY);
     }
 
-    /**
-     * 根据当前图片的Matrix获得图片的范围
-     *
-     * @return
-     */
+    //根据当前图片的Matrix获得图片的范围
     private RectF getMatrixRectF() {
         Matrix mMatrix = matrix;
         RectF rect = new RectF();

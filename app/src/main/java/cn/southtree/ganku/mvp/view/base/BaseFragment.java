@@ -25,7 +25,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment {
     protected Activity mContext;    //当前环境上下文
     private Unbinder unbinder;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,10 +37,9 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setupActivityComponent(App.getmAppComponent(),new ActivityModule(mContext));
+        initInject();
         initViews();
     }
-
 
     @Override
     public void onDestroy() {
@@ -54,7 +52,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment {
     protected abstract int getLayout();
 
     //依赖注入入口
-    protected abstract void setupActivityComponent(AppComponent appComponent, ActivityModule activityModule);
+    protected abstract void initInject();
     //初始化View
     protected abstract void initViews();
 

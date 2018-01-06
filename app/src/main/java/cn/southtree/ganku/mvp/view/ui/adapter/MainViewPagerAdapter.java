@@ -28,9 +28,7 @@ import cn.southtree.ganku.mvp.view.ui.fragment.MainPagerFragment;
 public class MainViewPagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = "MainViewPagerAdapter";
     public enum titleEnum {App,Android,ios,Web} //title的enum
-
     private SparseArray<Fragment> fragments = new SparseArray<>();    //id为常量
-
     private SparseBooleanArray tabs = new SparseBooleanArray();  //tab[0]->{fragment's name}
     private MainActivity mActivity;
 
@@ -84,6 +82,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return tabs.size();
     }
+
     private String getName(int pos){
         int position = tabs.keyAt(pos);
         switch (position){

@@ -56,14 +56,17 @@ public class MainListAdapter extends RecyclerView.Adapter {
             notifyDataSetChanged();
         }
     }
+
     public List<GankBean> getData(){
         return data;
     }
+
     public void addData(List<GankBean> data) {
         int temp = this.data.size();
         this.data.addAll(data);
         notifyItemChanged(temp);
     }
+
     private void showItemAnimator(int position,View view){
         if (position > lastPosition){
             lastPosition = position;
@@ -76,6 +79,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
     public void enableMeizi(boolean enable){
         this.isMeizi = enable;
     }
+
     public MainListAdapter(Context context, List<GankBean> data) {
         this.data = new ArrayList<>();
         if (context != null) {
@@ -83,15 +87,18 @@ public class MainListAdapter extends RecyclerView.Adapter {
             this.context = context;
         }
     }
+
     public MainListAdapter(Context context) {
         this(context, null);
     }
+
     private OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onClick(View view, int position) {
 
         }
     };
+
     public void addOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
@@ -176,7 +183,6 @@ public class MainListAdapter extends RecyclerView.Adapter {
 
     }
 
-
     @Override
     public int getItemCount() {
         return data == null||data.size()==0 ? 0 : data.size() + 1;
@@ -199,12 +205,14 @@ public class MainListAdapter extends RecyclerView.Adapter {
 
         }
     }
+
     static class FooterViewHolder extends RecyclerView.ViewHolder{
         public FooterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
+
     static class MeiziViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.meizi_iv)
         ImageView iv;

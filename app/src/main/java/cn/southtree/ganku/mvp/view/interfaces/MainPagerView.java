@@ -1,5 +1,9 @@
 package cn.southtree.ganku.mvp.view.interfaces;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import java.util.List;
 
 import cn.southtree.ganku.mvp.model.remote.DataBean;
@@ -18,5 +22,7 @@ public interface MainPagerView extends IBaseView {
     void dismissProcess();                                  // 取消进度
     void setCurrentPage(int currentPage);                   //设置当前待加载页
     void setIsLoading(boolean isLoading);                   //设置是否在加载
-
+    void doJump(Intent intent);                             //跳转页面
+    void showGirl(String url);                              //显示小姐姐
+    void closeGirl();                                       //dismiss小姐姐
 }

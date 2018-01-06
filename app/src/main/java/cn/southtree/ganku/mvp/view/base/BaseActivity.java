@@ -34,7 +34,7 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
         initStatusBar();
         unbinder = ButterKnife.bind(this);
         mContext = this;
-        setupActivityComponent(App.getmAppComponent(),new ActivityModule(this));
+        initInject();
         initViews();
     }
 
@@ -59,7 +59,8 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
     protected abstract int getLayout();
 
     //依赖注入入口
-    protected abstract void setupActivityComponent(AppComponent appComponent,ActivityModule activityModule);
+    protected abstract void initInject();
+
     //初始化View
     protected abstract void initViews();
 }

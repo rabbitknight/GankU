@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import javax.inject.Inject;
+
 import cn.southtree.ganku.R;
 
 /**
@@ -23,8 +25,8 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
     private Context mContext;
     private int colorId;
 
+    @Inject
     public MItemDecoration(Context context) {
-        super();
         this.mContext = context;
         mBound = new Rect();
         mPaint = new Paint();
@@ -32,9 +34,11 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
         mHeight = 2;
         mPaint.setColor(ContextCompat.getColor(mContext,colorId));
     }
+
     public void setmHeight(int pxHeight){
         this.mHeight = pxHeight;
     }
+
     public void setColorId(int id){
         this.colorId = id;
     }

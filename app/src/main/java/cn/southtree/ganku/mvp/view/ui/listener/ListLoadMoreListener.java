@@ -26,23 +26,25 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
     private boolean isLoading = false;
     private int currentPage = 1;
     private int[] lasts = new int[2];
-
-
     private int lastVisibleItemPosition,totalItemCount;
     private RecyclerView.LayoutManager mLayoutManager;
+
     private OnLoadMoreListener defaultOnLaodMoreListener = new OnLoadMoreListener() {
         @Override
         public void loadMore(int pos) {
             Log.i(TAG, "loadMore: ");
         }
     };
+
     public void addOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
         this.defaultOnLaodMoreListener = onLoadMoreListener;
     }
+
     @Inject
     public ListLoadMoreListener(RecyclerView.LayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
     }
+
     public void setLoading(boolean isLoading){
         this.isLoading = isLoading;
     }
@@ -69,9 +71,11 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
         }
 
     }
+
     public void setCurrentPage(int currentPage){
         this.currentPage = currentPage;
     }
+
     public interface OnLoadMoreListener {
         void loadMore(int currentPage);
     }

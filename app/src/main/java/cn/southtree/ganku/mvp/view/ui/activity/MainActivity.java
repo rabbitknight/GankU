@@ -27,6 +27,7 @@ import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
 import cn.southtree.ganku.di.component.AppComponent;
+import cn.southtree.ganku.di.component.DaggerActivityComponent;
 import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.mvp.presenter.impl.MainPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseActivity;
@@ -79,13 +80,11 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     @BindView(R.id.girl_cb)
     AppCompatCheckBox girlCb;
 
-
     private App app;
     private SparseBooleanArray tabs = new SparseBooleanArray();
     private SparseBooleanArray tabs_temp = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
-
 
     @Override
     protected int getLayout() {
@@ -93,8 +92,13 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     }
 
     @Override
-    protected void setupActivityComponent(AppComponent appComponent, ActivityModule activityModule) {
-        appComponent.inject(this);
+    protected void initInject() {
+        DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(App.getmAppComponent())
+                .build()
+                .inject(this);
+
     }
 
     @Override
@@ -126,8 +130,6 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
 
     }
-
-
 
     @Override
     public void showProcess() {

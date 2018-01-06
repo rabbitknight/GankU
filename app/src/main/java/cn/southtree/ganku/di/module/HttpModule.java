@@ -24,10 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class HttpModule {
     private String BASE_URL;
-    //private Application application;
     public HttpModule(String baseUrl) {
         this.BASE_URL = baseUrl;
-        //this.application = application;
     }
 
     //inject okHttpClient
@@ -40,6 +38,7 @@ public class HttpModule {
                 .connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
                 .cache(cache).build();
     }
+
     //inject Retrofit
     @Singleton
     @Provides

@@ -1,6 +1,7 @@
 package cn.southtree.ganku;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.util.Log;
@@ -12,8 +13,6 @@ import javax.inject.Inject;
 import cn.southtree.ganku.common.Constants;
 import cn.southtree.ganku.di.component.AppComponent;
 import cn.southtree.ganku.di.component.DaggerAppComponent;
-//import cn.southtree.ganku.di.component.DaggerHttpComponent;
-import cn.southtree.ganku.di.component.HttpComponent;
 import cn.southtree.ganku.di.module.AppModule;
 import cn.southtree.ganku.di.module.HttpModule;
 import cn.southtree.ganku.net.api.GankApiService;
@@ -28,11 +27,13 @@ public class App extends Application {
     private static App appContext;              //整个APP的上下文环境
     private static AppComponent mAppComponent;  //整个APP管理的Component
     private static SharedPreferences mSahre;
+
     @Inject
     GankApiService gankApiService;
     public static App getAppContext() {
         return appContext;
     }
+
     public static AppComponent getmAppComponent() {
         return mAppComponent;
     }
@@ -63,10 +64,9 @@ public class App extends Application {
         appContext = this;
         QbSdk.initX5Environment(appContext,cb);
         QbSdk.setDownloadWithoutWifi(true);
-        mAppComponent = DaggerAppComponent
-                .builder()
-                .appModule(new AppModule(this))
+        mAppComponent = DaggerAppComponent.builder()
                 .httpModule(new HttpModule(Constants.GANK_IO))
+                .appModule(new AppModule(this))
                 .build();
         mAppComponent.inject(this);
         mSahre = getSharedPreferences("img",MODE_PRIVATE);
