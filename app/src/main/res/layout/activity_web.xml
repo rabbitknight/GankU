@@ -8,6 +8,7 @@
     android:background="@color/colorAlpha"
     android:paddingTop="24dp"
     >
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
             android:id="@+id/toolbar_tb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/ic_close_black_24dp"
             >
         </android.support.v7.widget.Toolbar>
@@ -28,22 +29,25 @@
             />
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="@color/colorMainWhite"
-
-        >
-        <com.tencent.smtt.sdk.WebView
-            android:id="@+id/x5web_wv"
+        android:id="@+id/swipe_srl">
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorMainWhite"
-
             >
-        </com.tencent.smtt.sdk.WebView>
-    </android.support.v4.widget.NestedScrollView>
+            <com.tencent.smtt.sdk.WebView
+                android:id="@+id/x5web_wv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorMainWhite"
+
+                >
+            </com.tencent.smtt.sdk.WebView>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>

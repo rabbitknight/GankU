@@ -97,9 +97,9 @@ public class App extends Application {
         mAppComponent.inject(this);
         mSahre = getSharedPreferences("img",MODE_PRIVATE);
 
-        hasChrome();
-        if (canChromeLoad)
-            CustomTabsClient.connectAndInitialize(this, "com.android.chrome");
+        //hasChrome();
+/*        if (canChromeLoad)
+            CustomTabsClient.connectAndInitialize(this, "com.android.chrome");*/
 
     }
 }

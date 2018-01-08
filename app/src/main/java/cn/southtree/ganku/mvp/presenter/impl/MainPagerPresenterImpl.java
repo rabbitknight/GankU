@@ -144,6 +144,8 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
         }
     }
 
+    @Deprecated
+    // 使用Chrome进行显示网页
     private void launchUrl(String url) {
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
         intentBuilder.setToolbarColor(ContextCompat.getColor(view.getContext(),R.color.colorMainDark));

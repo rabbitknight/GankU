@@ -12,7 +12,7 @@ import cn.southtree.ganku.mvp.view.base.IBaseView;
  * @version 2017/12/23
  */
 
-public interface MainView extends IBaseView {
+public interface MainV extends IBaseView {
     void showProcess();
     void dismissProcess();
 }

@@ -1,35 +1,19 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.os.Build;
-import android.support.customtabs.CustomTabsCallback;
-import android.support.customtabs.CustomTabsClient;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.customtabs.CustomTabsServiceConnection;
-import android.support.customtabs.CustomTabsSession;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,18 +21,17 @@ import butterknife.BindView;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
-import cn.southtree.ganku.di.component.AppComponent;
 import cn.southtree.ganku.di.component.DaggerActivityComponent;
 import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.mvp.presenter.impl.MainPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseActivity;
-import cn.southtree.ganku.mvp.view.interfaces.MainView;
+import cn.southtree.ganku.mvp.view.interfaces.MainV;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainViewPagerAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import okhttp3.OkHttpClient;
 
 
-public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainView,
+public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainV,
         DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,OnFrag2ActivityCallBack{
     private static final String TAG = "MainActivity";
 

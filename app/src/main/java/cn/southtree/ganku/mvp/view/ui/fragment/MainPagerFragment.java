@@ -1,7 +1,6 @@
 package cn.southtree.ganku.mvp.view.ui.fragment;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -11,12 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -29,31 +24,26 @@ import butterknife.BindView;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
-import cn.southtree.ganku.di.component.AppComponent;
 import cn.southtree.ganku.di.component.DaggerFragmentComponent;
 import cn.southtree.ganku.di.component.FragmentComponent;
-import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.di.module.FragmentModule;
 import cn.southtree.ganku.di.module.RecyclerViewModule;
 import cn.southtree.ganku.mvp.model.remote.GankBean;
 import cn.southtree.ganku.mvp.presenter.impl.MainPagerPresenterImpl;
 import cn.southtree.ganku.mvp.view.base.BaseFragment;
-import cn.southtree.ganku.mvp.view.interfaces.MainPagerView;
-import cn.southtree.ganku.mvp.view.ui.activity.WebActivity;
+import cn.southtree.ganku.mvp.view.interfaces.MainPagerV;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainListAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.ListLoadMoreListener;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnItemClickListener;
 import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
 import cn.southtree.ganku.mvp.view.ui.widget.MItemDecoration;
-import cn.southtree.ganku.utils.ToastUtil;
-import dagger.Component;
 
 /**
  * Created by zhuo.chen on 2017/12/26.
  */
 
-public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerView,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener,View.OnClickListener{
+public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerV,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener,View.OnClickListener{
     //常量
     private static final String TAG = "MainPagerFragment";
 
