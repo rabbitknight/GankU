@@ -205,7 +205,7 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
                 super.onReceivedTitle(webView, s);
             }
         });
-        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setDatabaseEnabled(true);
         //缓存数据的存储地址
@@ -217,7 +217,7 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
         mWebSettings.setAllowFileAccess(true);
         //开启混合模式解决图片不显示的问题
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mWebSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            mWebSettings.setMixedContentMode(0);
         }
 
     }

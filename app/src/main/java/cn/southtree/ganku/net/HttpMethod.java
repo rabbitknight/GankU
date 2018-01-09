@@ -13,9 +13,10 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by Southtree on 2017/11/16.
+ * @author Southtree
+ * @version 2017/11/16.
  */
-
+@Deprecated
 public class HttpMethod {
     public static final String BASE_URL = Constants.GANK_IO;
     public static final int TIME_OUT = 3000;
