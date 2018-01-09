@@ -14,6 +14,7 @@ import cn.southtree.ganku.R;
 
 /**
  * RecyclerView 的分割线
+ *
  * @author zhuo.chen
  * @version 2017/12/28
  */
@@ -32,14 +33,14 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
         mPaint = new Paint();
         colorId = R.color.colorDividerGray;
         mHeight = 2;
-        mPaint.setColor(ContextCompat.getColor(mContext,colorId));
+        mPaint.setColor(ContextCompat.getColor(mContext, colorId));
     }
 
-    public void setmHeight(int pxHeight){
+    public void setmHeight(int pxHeight) {
         this.mHeight = pxHeight;
     }
 
-    public void setColorId(int id){
+    public void setColorId(int id) {
         this.colorId = id;
     }
 
@@ -48,13 +49,13 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - left;
         final int childCount = parent.getChildCount();
-        for (int i = 0; i< childCount-1; i++){
+        for (int i = 0; i < childCount - 1; i++) {
             final View child = parent.getChildAt(i);
-            parent.getDecoratedBoundsWithMargins(child,mBound);
-            final int  bottom = (int) (mBound.bottom - child.getTranslationY());
+            parent.getDecoratedBoundsWithMargins(child, mBound);
+            final int bottom = (int) (mBound.bottom - child.getTranslationY());
             final int top = bottom - mHeight;
             c.save();
-            c.drawRect(left,top,right,bottom,mPaint);
+            c.drawRect(left, top, right, bottom, mPaint);
             c.restore();
         }
     }

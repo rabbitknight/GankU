@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:minHeight="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlways"
+                app:layout_scrollFlags="scroll|enterAlways|exitUntilCollapsed|snap"
                 app:contentScrim="@color/colorMainGray"
                 android:fitsSystemWindows="true"
                 >
@@ -64,6 +64,21 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
         </android.support.v4.view.ViewPager>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/float_fab"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_margin="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_arrow_upward_black_24dp"
+            app:elevation="@dimen/fab_margin"
+            app:rippleColor="@color/colorMainGray"
+            app:layout_anchor="@id/content_vp"
+            app:layout_anchorGravity="bottom|right"
+            >
+        </android.support.design.widget.FloatingActionButton>
 
     </android.support.design.widget.CoordinatorLayout>
 

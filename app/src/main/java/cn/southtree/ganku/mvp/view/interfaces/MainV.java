@@ -8,11 +8,15 @@ import cn.southtree.ganku.mvp.view.base.IBaseView;
 
 /**
  * MainActivity 接口
+ *
  * @author zhuo.chen
  * @version 2017/12/23
  */
 
 public interface MainV extends IBaseView {
     void showProcess();
+
     void dismissProcess();
+
+    void smooth2position();
 }

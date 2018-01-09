@@ -37,7 +37,7 @@ public class TestActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         String url = getIntent().getStringExtra("meizi");
-        if (url != null && !"".equals(url)){
+        if (url != null && !"".equals(url)) {
             Glide.with(this).load(url).listener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

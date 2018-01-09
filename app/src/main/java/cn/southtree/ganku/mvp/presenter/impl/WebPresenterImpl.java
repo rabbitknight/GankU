@@ -11,9 +11,9 @@ import cn.southtree.ganku.mvp.view.ui.activity.WebActivity;
  * Created by zhuo.chen on 2018/1/8.
  */
 
-public class WebPresenterImpl extends BasePresenterImpl<WebActivity> implements WebPresenter{
+public class WebPresenterImpl extends BasePresenterImpl<WebActivity> implements WebPresenter {
     @Inject
-    public WebPresenterImpl(){
+    public WebPresenterImpl() {
 
     }
 

@@ -24,8 +24,8 @@ import java.lang.ref.WeakReference;
  * Created by zhuo.chen on 2018/1/4.
  */
 
-public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnTouchListener,
-        ScaleGestureDetector.OnScaleGestureListener,ViewTreeObserver.OnGlobalLayoutListener {
+public class ImageViewWrap implements GestureDetector.OnGestureListener, View.OnTouchListener,
+        ScaleGestureDetector.OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener {
     private static final String TAG = ImageViewWrap.class.getSimpleName();
     private static final float SCALE_MAX = 4.0f;    //放大的系数
     private static float initScale = 1.0f;          //初始化的放大倍数
@@ -70,42 +70,42 @@ public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnT
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         mScaleDetector.onTouchEvent(event);
-        float x = 0,y = 0;
+        float x = 0, y = 0;
         final int pointerCount = event.getPointerCount();
-        for (int i = 0; i < pointerCount; i ++){
+        for (int i = 0; i < pointerCount; i++) {
             x += event.getX(i);
             y += event.getY(i);
         }
         x = x / pointerCount;
         y = y / pointerCount;
-        if (pointerCount != lastPointerCount){
+        if (pointerCount != lastPointerCount) {
             isCanDrag = false;
             mLastX = x;
             mLastY = y;
         }
 
         lastPointerCount = pointerCount;
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 float dx = x - mLastX;
                 float dy = y - mLastY;
-                if (!isCanDrag){
-                    isCanDrag = isCanDrag(dx,dy);
+                if (!isCanDrag) {
+                    isCanDrag = isCanDrag(dx, dy);
                 }
-                if (isCanDrag){
+                if (isCanDrag) {
                     RectF rectF = getMatrixRectF();
-                    if (img.getDrawable()!=null){
+                    if (img.getDrawable() != null) {
                         isCheckLeftAndRight = isCheckTopAndBottom = true;
                     }
-                    if (rectF.width() < img.getWidth()){
+                    if (rectF.width() < img.getWidth()) {
                         dx = 0;
                         isCheckLeftAndRight = false;
                     }
-                    if (rectF.height() < img.getHeight()){
+                    if (rectF.height() < img.getHeight()) {
                         dy = 0;
                         isCheckTopAndBottom = false;
                     }
-                    matrix.postTranslate(dx,dy);
+                    matrix.postTranslate(dx, dy);
                     checkMatrixBounds();
                     img.setImageMatrix(matrix);
                 }
@@ -124,7 +124,7 @@ public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnT
     }
 
     private boolean isCanDrag(float dx, float dy) {
-        return Math.sqrt((dx*dx)+(dy*dy)) >= mTouchSlop;
+        return Math.sqrt((dx * dx) + (dy * dy)) >= mTouchSlop;
     }
 
     @Deprecated
@@ -284,20 +284,16 @@ public class ImageViewWrap implements GestureDetector.OnGestureListener,View.OnT
         final float viewWidth = img.getWidth();
         final float viewHeight = img.getHeight();
         // 判断移动或缩放后，图片显示是否超出屏幕边界
-        if (rect.top > 0 && isCheckTopAndBottom)
-        {
+        if (rect.top > 0 && isCheckTopAndBottom) {
             deltaY = -rect.top;
         }
-        if (rect.bottom < viewHeight && isCheckTopAndBottom)
-        {
+        if (rect.bottom < viewHeight && isCheckTopAndBottom) {
             deltaY = viewHeight - rect.bottom;
         }
-        if (rect.left > 0 && isCheckLeftAndRight)
-        {
+        if (rect.left > 0 && isCheckLeftAndRight) {
             deltaX = -rect.left;
         }
-        if (rect.right < viewWidth && isCheckLeftAndRight)
-        {
+        if (rect.right < viewWidth && isCheckLeftAndRight) {
             deltaX = viewWidth - rect.right;
         }
         matrix.postTranslate(deltaX, deltaY);

@@ -2,6 +2,7 @@ package cn.southtree.ganku.mvp.view.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
 import butterknife.BindView;
 
 import cn.southtree.ganku.App;
@@ -30,10 +32,12 @@ import cn.southtree.ganku.di.module.FragmentModule;
 import cn.southtree.ganku.di.module.RecyclerViewModule;
 import cn.southtree.ganku.mvp.model.remote.GankBean;
 import cn.southtree.ganku.mvp.presenter.impl.MainPagerPresenterImpl;
+import cn.southtree.ganku.mvp.presenter.interfaces.MainPagerPresenter;
 import cn.southtree.ganku.mvp.view.base.BaseFragment;
 import cn.southtree.ganku.mvp.view.interfaces.MainPagerV;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainListAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.ListLoadMoreListener;
+import cn.southtree.ganku.mvp.view.ui.listener.OnActivity2FragCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnItemClickListener;
 import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
@@ -43,7 +47,9 @@ import cn.southtree.ganku.mvp.view.ui.widget.MItemDecoration;
  * Created by zhuo.chen on 2017/12/26.
  */
 
-public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> implements MainPagerV,SwipeRefreshLayout.OnRefreshListener,ListLoadMoreListener.OnLoadMoreListener,OnItemClickListener,View.OnClickListener{
+public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implements MainPagerV,
+        SwipeRefreshLayout.OnRefreshListener, ListLoadMoreListener.OnLoadMoreListener,
+        OnItemClickListener, View.OnClickListener, OnActivity2FragCallBack {
     //常量
     private static final String TAG = "MainPagerFragment";
 
@@ -79,6 +85,8 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     RecyclerView listRv;
     @BindView(R.id.swipe_srl)
     SwipeRefreshLayout swipeSrl;
+/*    @BindView(R.id.float_fab)
+    FloatingActionButton fab;*/
 
     //获取页面布局
     @Override
@@ -91,13 +99,13 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     protected void initInject() {
         mComponent = DaggerFragmentComponent.builder()
                 .appComponent(App.getmAppComponent())
-                .recyclerViewModule(new RecyclerViewModule(gankBeans,this.mContext))
+                .recyclerViewModule(new RecyclerViewModule(gankBeans, this.mContext))
                 .fragmentModule(new FragmentModule(this))
                 .build();
         mComponent.inject(this);
     }
 
-    public FragmentComponent getmComponent(){
+    public FragmentComponent getmComponent() {
         return mComponent;
     }
 
@@ -111,13 +119,13 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         presenter.attachView(this);
         presenter.setPageType(pageType);
         //下拉刷新swipe初始化
-        swipeSrl.setColorSchemeResources(R.color.colorMainRed,R.color.colorMainWhite,R.color.colorMainDark);
+        swipeSrl.setColorSchemeResources(R.color.colorMainRed, R.color.colorMainWhite, R.color.colorMainDark);
         swipeSrl.setOnRefreshListener(this);
         //recyclerView
-        if (pageType.equals("福利")){
+        if (pageType.equals("福利")) {
             listRv.setLayoutManager(staggeredGridLayoutManager);
             mAdapter.enableMeizi(true);
-        }else{
+        } else {
             listRv.setLayoutManager(linearLayoutManager);
             listRv.addItemDecoration(itemDecoration);
         }
@@ -131,20 +139,19 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
         onRefresh();
         girlDialog = new AlertDialog.Builder(mContext).create();
 
-        content = LayoutInflater.from(mContext).inflate(R.layout.item_browser_img,null);
+        content = LayoutInflater.from(mContext).inflate(R.layout.item_browser_img, null);
         img = content.findViewById(R.id.img_iv);
         btn = content.findViewById(R.id.close_btn);
         btn.setOnClickListener(this);
 
 
-
     }
 
-    public List<GankBean> getGankBeans(){
+    public List<GankBean> getGankBeans() {
         return mAdapter.getData();
     }
 
-    public void setOnFrag2ActivityCallBack(OnFrag2ActivityCallBack listener){
+    public void setOnFrag2ActivityCallBack(OnFrag2ActivityCallBack listener) {
         this.callBack = listener;
     }
 
@@ -159,24 +166,24 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
     }
 
     @Override
-    public void setList(List<GankBean> gankBeans,boolean isAdd) {
-        if (isAdd){
+    public void setList(List<GankBean> gankBeans, boolean isAdd) {
+        if (isAdd) {
             mAdapter.addData(gankBeans);
-        }else {
+        } else {
             mAdapter.setData(gankBeans);
         }
     }
 
     @Override
     public void showProcess() {
-        if (!swipeSrl.isRefreshing()){
+        if (!swipeSrl.isRefreshing()) {
             swipeSrl.setRefreshing(true);
         }
     }
 
     @Override
     public void dismissProcess() {
-        if (swipeSrl.isRefreshing()){
+        if (swipeSrl.isRefreshing()) {
             swipeSrl.setRefreshing(false);
         }
     }
@@ -208,35 +215,43 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenterImpl> impl
 
     @Override
     public void closeGirl() {
-        if (girlDialog.isShowing()){
+        if (girlDialog.isShowing()) {
             girlDialog.dismiss();
         }
     }
 
     @Override
     public void loadMore(int currentPage) {
-        presenter.loadMore(currentPage,pageType);
+        presenter.loadMore(currentPage, pageType);
     }
 
     @Override
     public void onClick(View v) {
-        presenter.consumeClickEvent(v,-1);
+        presenter.consumeClickEvent(v, -1);
     }
+
     // 获取当前界面的pageType
-    private String getPageType(int pageId){
-        switch (pageId){
+    private String getPageType(int pageId) {
+        switch (pageId) {
             case Constants.APP:
                 return "App";
             case Constants.ANDROID:
                 return "Android";
             case Constants.IOS:
-                return  "iOS";
+                return "iOS";
             case Constants.WEB:
                 return "前端";
             case Constants.MEIZI:
                 return "福利";
             default:
                 return "";
+        }
+    }
+
+    @Override
+    public void smooth2Position(int position) {
+        if (mAdapter.getData().size() > 0) {
+            listRv.smoothScrollToPosition(0);
         }
     }
 }

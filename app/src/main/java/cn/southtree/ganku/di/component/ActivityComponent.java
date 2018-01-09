@@ -12,9 +12,11 @@ import dagger.Component;
  * @author rabbitknight
  */
 @PerApp
-@Component(dependencies = AppComponent.class,modules = ActivityModule.class)
+@Component(dependencies = AppComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
     Activity getActivity();
+
     void inject(MainActivity mainActivity);
+
     void inject(WebActivity webActivity);
 }

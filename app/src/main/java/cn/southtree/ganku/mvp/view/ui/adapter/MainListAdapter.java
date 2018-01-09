@@ -35,9 +35,9 @@ import cn.southtree.ganku.utils.StringUtil;
 import dagger.Component;
 
 /**
- * @desc 主页RecyclerView列表的适配器
  * @author zhuo.chen
  * @version 2017/12/25
+ * @desc 主页RecyclerView列表的适配器
  */
 
 public class MainListAdapter extends RecyclerView.Adapter {
@@ -57,7 +57,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public List<GankBean> getData(){
+    public List<GankBean> getData() {
         return data;
     }
 
@@ -67,16 +67,16 @@ public class MainListAdapter extends RecyclerView.Adapter {
         notifyItemChanged(temp);
     }
 
-    private void showItemAnimator(int position,View view){
-        if (position > lastPosition){
+    private void showItemAnimator(int position, View view) {
+        if (position > lastPosition) {
             lastPosition = position;
-            ObjectAnimator.ofFloat(view,"translationY",1f*view.getHeight(),0f)
+            ObjectAnimator.ofFloat(view, "translationY", 1f * view.getHeight(), 0f)
                     .setDuration(500)
                     .start();
         }
     }
 
-    public void enableMeizi(boolean enable){
+    public void enableMeizi(boolean enable) {
         this.isMeizi = enable;
     }
 
@@ -99,31 +99,31 @@ public class MainListAdapter extends RecyclerView.Adapter {
         }
     };
 
-    public void addOnItemClickListener(OnItemClickListener onItemClickListener){
+    public void addOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == data.size()? FOOTER : COMMON;
+        return position == data.size() ? FOOTER : COMMON;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == COMMON){
+        if (viewType == COMMON) {
             View view;
-            if (isMeizi){
+            if (isMeizi) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_fragment_meizi, parent, false);
                 return new MeiziViewHolder(view);
-            }else {
-                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_data,parent,false);
+            } else {
+                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_data, parent, false);
                 return new ItemViewHolder(view);
             }
 
-        }else if (viewType == FOOTER){
-            View view = LayoutInflater.from(context).inflate(R.layout.item_footer,parent,false);
+        } else if (viewType == FOOTER) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_footer, parent, false);
             return new FooterViewHolder(view);
-        }else {
+        } else {
             return null;
         }
 
@@ -131,13 +131,13 @@ public class MainListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == COMMON){
-            if (isMeizi){
-                if (!StringUtil.isNull(data.get(position).getUrl())){
+        if (getItemViewType(position) == COMMON) {
+            if (isMeizi) {
+                if (!StringUtil.isNull(data.get(position).getUrl())) {
                     Glide.with(context)
                             .load(data.get(position).getUrl())
-                            .apply(new RequestOptions().centerCrop())
-                            .into(((MeiziViewHolder)holder).iv);
+                            .apply(new RequestOptions().centerCrop().error(R.drawable.ic_snow).placeholder(R.drawable.ic_snow))
+                            .into(((MeiziViewHolder) holder).iv);
 
 /*                    ((MeiziViewHolder) holder).iv.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -148,36 +148,40 @@ public class MainListAdapter extends RecyclerView.Adapter {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            onItemClickListener.onClick(v,position);
+                            onItemClickListener.onClick(v, position);
                         }
                     });
                 }
-            }else {
-                if (!StringUtil.isNull(data.get(position).getDesc())){
-                    ((ItemViewHolder)holder).tvDesc.setText(data.get(position).getDesc());
+            } else {
+                if (!StringUtil.isNull(data.get(position).getDesc())) {
+                    ((ItemViewHolder) holder).tvDesc.setText(data.get(position).getDesc());
                 }
-                if (!StringUtil.isNull(data.get(position).getWho())){
-                    ((ItemViewHolder)holder).tvWho.setText(data.get(position).getWho());
+                if (!StringUtil.isNull(data.get(position).getWho())) {
+                    ((ItemViewHolder) holder).tvWho.setText(data.get(position).getWho());
                 }
-                if (!StringUtil.isNull(data.get(position).getCreatedAt())){
-                    ((ItemViewHolder)holder).tvTime.setText(StringUtil.strDate2str(data.get(position).getPublishedAt()));
+                if (!StringUtil.isNull(data.get(position).getCreatedAt())) {
+                    ((ItemViewHolder) holder).tvTime.setText(StringUtil.strDate2str(data.get(position).getPublishedAt()));
                 }
-                if (data.get(position).getImages()!=null&&data.get(position).getImages().size()!=0){
-                    Glide.with(context).load(data.get(position).getImages().get(0)).thumbnail(0.1f).into(((ItemViewHolder)holder).tvImg);
-                }else {
-                    ((ItemViewHolder)holder).rlImg.setVisibility(View.GONE);
+                if (data.get(position).getImages() != null && data.get(position).getImages().size() != 0) {
+                    Glide.with(context)
+                            .load(data.get(position).getImages().get(0))
+                            .apply(new RequestOptions().error(R.drawable.ic_snow).placeholder(R.drawable.ic_snow))
+                            .thumbnail(0.1f)
+                            .into(((ItemViewHolder) holder).tvImg);
+                } else {
+                    ((ItemViewHolder) holder).rlImg.setVisibility(View.GONE);
                 }
-                ((ItemViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
+                ((ItemViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onItemClickListener.onClick(v,position);
+                        onItemClickListener.onClick(v, position);
                     }
                 });
             }
-            showItemAnimator(position,holder.itemView);
-        }else if (getItemViewType(position) == FOOTER){
-            showItemAnimator(position,holder.itemView);
-        }else {
+            showItemAnimator(position, holder.itemView);
+        } else if (getItemViewType(position) == FOOTER) {
+            showItemAnimator(position, holder.itemView);
+        } else {
             return;
         }
 
@@ -185,10 +189,10 @@ public class MainListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return data == null||data.size()==0 ? 0 : data.size() + 1;
+        return data == null || data.size() == 0 ? 0 : data.size() + 1;
     }
 
-    static class ItemViewHolder extends RecyclerView.ViewHolder{
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_desc)
         TextView tvDesc;
         @BindView(R.id.tv_who)
@@ -199,6 +203,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
         ImageView tvImg;
         @BindView(R.id.rl_img)
         RelativeLayout rlImg;
+
         ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -206,19 +211,20 @@ public class MainListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    static class FooterViewHolder extends RecyclerView.ViewHolder{
+    static class FooterViewHolder extends RecyclerView.ViewHolder {
         public FooterViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
-    static class MeiziViewHolder extends RecyclerView.ViewHolder{
+    static class MeiziViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.meizi_iv)
         ImageView iv;
+
         public MeiziViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

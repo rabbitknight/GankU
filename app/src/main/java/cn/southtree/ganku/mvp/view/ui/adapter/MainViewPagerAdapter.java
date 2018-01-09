@@ -1,5 +1,6 @@
 package cn.southtree.ganku.mvp.view.ui.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,6 +74,7 @@ public class MainViewPagerAdapter extends FragmentPagerAdapter {
             Log.i(TAG, "getItem: "+tabs.keyAt(position));
             mainPagerFragment.setArguments(args);
             mainPagerFragment.setOnFrag2ActivityCallBack(mActivity);
+            mActivity.setCallBack(id,mainPagerFragment);
             fragments.put(id,mainPagerFragment);
         }
         return fragments.get(id);

@@ -21,7 +21,7 @@ public abstract class BasePresenterImpl<T extends IBaseView> implements IBasePre
     @Override
     public void detachView() {
         this.view = null;
-        if (mSubscription != null&&mSubscription.isUnsubscribed()){
+        if (mSubscription != null && mSubscription.isUnsubscribed()) {
             mSubscription.unsubscribe();
         }
     }

@@ -10,10 +10,7 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
  */
 
 public interface MainPresenter extends IBasePresenter {
-    // TODO: 2017/12/23 MainPresenter
-    void onRefresh();
-    void onLoadMore();
-    void onClick(View view);
     void updateMeizi(ImageView view);
+    void onConsumeClick(View view);
 
 }

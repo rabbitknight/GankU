@@ -17,9 +17,11 @@ import dagger.Component;
  * Created by zhuo.chen on 2018/1/6.
  */
 @PerApp
-@Component(dependencies = AppComponent.class,modules={FragmentModule.class, RecyclerViewModule.class})
+@Component(dependencies = AppComponent.class, modules = {FragmentModule.class, RecyclerViewModule.class})
 public interface FragmentComponent {
     MItemDecoration getMItemDecoration();
+
     void inject(MainPagerFragment fragment);
+
     void inject(MainPagerPresenterImpl presenter);
 }

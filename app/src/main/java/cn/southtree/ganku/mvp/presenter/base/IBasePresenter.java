@@ -10,6 +10,8 @@ import cn.southtree.ganku.mvp.view.base.IBaseView;
 
 public interface IBasePresenter<T extends IBaseView> {
     void attachView(@NonNull T view);
+
     void detachView();
+
     void onCreate();
 }

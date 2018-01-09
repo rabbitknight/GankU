@@ -26,7 +26,7 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
     private boolean isLoading = false;
     private int currentPage = 1;
     private int[] lasts = new int[2];
-    private int lastVisibleItemPosition,totalItemCount;
+    private int lastVisibleItemPosition, totalItemCount;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private OnLoadMoreListener defaultOnLaodMoreListener = new OnLoadMoreListener() {
@@ -36,7 +36,7 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
         }
     };
 
-    public void addOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener){
+    public void addOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.defaultOnLaodMoreListener = onLoadMoreListener;
     }
 
@@ -45,34 +45,34 @@ public class ListLoadMoreListener extends RecyclerView.OnScrollListener {
         this.mLayoutManager = layoutManager;
     }
 
-    public void setLoading(boolean isLoading){
+    public void setLoading(boolean isLoading) {
         this.isLoading = isLoading;
     }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        if (mLayoutManager instanceof GridLayoutManager){
+        if (mLayoutManager instanceof GridLayoutManager) {
             lastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
             totalItemCount = mLayoutManager.getItemCount();
-        } else if (mLayoutManager instanceof LinearLayoutManager){
+        } else if (mLayoutManager instanceof LinearLayoutManager) {
             lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
             totalItemCount = mLayoutManager.getItemCount();
 
-        }else if(mLayoutManager instanceof StaggeredGridLayoutManager){
+        } else if (mLayoutManager instanceof StaggeredGridLayoutManager) {
             ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(lasts);
-            lastVisibleItemPosition = Math.max(lasts[1],lasts[0]);
+            lastVisibleItemPosition = Math.max(lasts[1], lasts[0]);
             totalItemCount = mLayoutManager.getItemCount();
-        }else {
+        } else {
             return;
         }
-        if (lastVisibleItemPosition + 1 == totalItemCount&&!isLoading){
+        if (lastVisibleItemPosition + 1 == totalItemCount && !isLoading) {
             defaultOnLaodMoreListener.loadMore(currentPage);
             currentPage++;
         }
 
     }
 
-    public void setCurrentPage(int currentPage){
+    public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 

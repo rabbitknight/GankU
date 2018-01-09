@@ -1,43 +1,54 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
 import cn.southtree.ganku.di.component.DaggerActivityComponent;
 import cn.southtree.ganku.di.module.ActivityModule;
 import cn.southtree.ganku.mvp.presenter.impl.MainPresenterImpl;
+import cn.southtree.ganku.mvp.presenter.interfaces.MainPresenter;
 import cn.southtree.ganku.mvp.view.base.BaseActivity;
 import cn.southtree.ganku.mvp.view.interfaces.MainV;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainViewPagerAdapter;
+import cn.southtree.ganku.mvp.view.ui.listener.OnActivity2FragCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import okhttp3.OkHttpClient;
 
 
-public class MainActivity extends BaseActivity<MainPresenterImpl> implements MainV,
-        DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,OnFrag2ActivityCallBack{
+public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
+        DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,
+        OnFrag2ActivityCallBack, AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "MainActivity";
+    @BindView(R.id.float_fab)
+    FloatingActionButton floatFab;
 
     private SparseBooleanArray tabs = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
+    private SparseArray<OnActivity2FragCallBack> callbacks = new SparseArray<>();
 
     @Inject
     public OkHttpClient okHttpClient;
@@ -79,6 +90,17 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
     @BindView(R.id.girl_cb)
     AppCompatCheckBox girlCb;
 
+    private CollapsingToolbarLayoutState state; // CollapsingToolbarLayout 折叠状态
+
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED, // 完全展开
+        COLLAPSED, // 折叠
+        INTERNEDIATE // 中间状态
+    }
+
+    public void setCallBack(int position, OnActivity2FragCallBack callBack) {
+        this.callbacks.put(position, callBack);
+    }
 
     @Override
     protected int getLayout() {
@@ -97,17 +119,17 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     protected void initViews() {
-
-
+        //toolbar
+        appbarApl.addOnOffsetChangedListener(this);
         //tab
-        tabs.put(Constants.APP,true);
-        tabs.put(Constants.ANDROID,true);
-        tabs.put(Constants.IOS,true);
-        tabs.put(Constants.WEB,true);
-        tabs.put(Constants.MEIZI,true);
+        tabs.put(Constants.APP, true);
+        tabs.put(Constants.ANDROID, true);
+        tabs.put(Constants.IOS, true);
+        tabs.put(Constants.WEB, true);
+        tabs.put(Constants.MEIZI, true);
         mPresenter = mainPresenter;
         mPresenter.attachView(this);
-        mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs,this);
+        mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs, this);
         contentVp.setAdapter(mAdapter);
         contentVp.setOffscreenPageLimit(5);
         //
@@ -121,6 +143,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         iosCb.setOnCheckedChangeListener(this);
         webCb.setOnCheckedChangeListener(this);
         //
+        floatFab.setOnClickListener(this);
 
     }
 
@@ -134,6 +157,10 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     }
 
+    @Override
+    public void smooth2position() {
+        callbacks.get((int) mAdapter.getItemId(contentVp.getCurrentItem())).smooth2Position(0);
+    }
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -147,7 +174,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        if (isChanged){
+        if (isChanged) {
             mAdapter.notifyDataSetChanged();
         }
 
@@ -161,17 +188,17 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
     @Override
     public void onClick(View v) {
-
+        mainPresenter.onConsumeClick(v);
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
+        switch (buttonView.getId()) {
             case R.id.and_cb:
                 if (isChecked) {
-                    if (tabs.get(Constants.ANDROID,false)){
+                    if (tabs.get(Constants.ANDROID, false)) {
 
-                    }else {
+                    } else {
                         tabs.put(Constants.ANDROID, true);
                         isChanged = true;
                     }
@@ -183,7 +210,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
                 break;
             case R.id.app_cb:
                 if (isChecked) {
-                    if (tabs.get(Constants.APP,false)){
+                    if (tabs.get(Constants.APP, false)) {
 
                     } else {
                         tabs.put(Constants.APP, true);
@@ -196,10 +223,10 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
                 break;
             case R.id.girl_cb:
                 if (isChecked) {
-                    if (tabs.get(Constants.MEIZI,false)){
+                    if (tabs.get(Constants.MEIZI, false)) {
 
-                    }else {
-                        tabs.put(Constants.MEIZI,true);
+                    } else {
+                        tabs.put(Constants.MEIZI, true);
                         isChanged = true;
                     }
                 } else {
@@ -209,9 +236,9 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
                 break;
             case R.id.ios_cb:
                 if (isChecked) {
-                    if (tabs.get(Constants.IOS, false)){
+                    if (tabs.get(Constants.IOS, false)) {
 
-                    }else {
+                    } else {
                         tabs.put(Constants.IOS, true);
                         isChanged = true;
                     }
@@ -222,7 +249,7 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
                 break;
             case R.id.web_cb:
                 if (isChecked) {
-                    if (tabs.get(Constants.WEB,false)){
+                    if (tabs.get(Constants.WEB, false)) {
 
                     } else {
                         tabs.put(Constants.WEB, true);
@@ -234,7 +261,8 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
 
                 }
                 break;
-            default:break;
+            default:
+                break;
         }
     }
 
@@ -243,4 +271,27 @@ public class MainActivity extends BaseActivity<MainPresenterImpl> implements Mai
         mainPresenter.updateMeizi(bgIv);
         mainPresenter.updateMeizi(girlIv);
     }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset == 0) {
+            if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                state = CollapsingToolbarLayoutState.EXPANDED; // 修改状态标记为展开
+            }
+        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+            if (state != CollapsingToolbarLayoutState.COLLAPSED) {
+                floatFab.hide();
+                state = CollapsingToolbarLayoutState.COLLAPSED; // 修改状态标记为折叠
+            }
+        } else {
+            if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                if (state == CollapsingToolbarLayoutState.COLLAPSED) {
+                    floatFab.show();
+                }
+                state = CollapsingToolbarLayoutState.INTERNEDIATE; // 修改状态标记为中间
+            }
+        }
+    }
+
+
 }

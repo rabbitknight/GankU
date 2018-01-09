@@ -20,9 +20,11 @@ import okhttp3.OkHttpClient;
  * @author rabbitknight
  */
 @Singleton
-@Component(modules = {AppModule.class,HttpModule.class})
+@Component(modules = {AppModule.class, HttpModule.class})
 public interface AppComponent {
     OkHttpClient getOkHttp();
+
     GankApiService getGankApi();
+
     void inject(App app);
 }

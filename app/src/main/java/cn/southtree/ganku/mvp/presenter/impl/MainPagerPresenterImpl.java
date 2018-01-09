@@ -28,6 +28,7 @@ import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 /**
  * tabFragment的P层
+ *
  * @author zhuo.chen
  * @version 2017/12/25.
  */
@@ -39,16 +40,16 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
     private String pageType;
 
     @Inject
-    public MainPagerPresenterImpl(){
+    public MainPagerPresenterImpl() {
 
     }
 
     @Override
-    public void loadMore(int currentPage,String type) {
+    public void loadMore(int currentPage, String type) {
         view.setIsLoading(true);
-        Log.i(TAG, "loadMore: "+currentPage);
+        Log.i(TAG, "loadMore: " + currentPage);
 
-        gankApiService.getData(type,10,currentPage)
+        gankApiService.getData(type, 10, currentPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DataBean>() {
@@ -59,7 +60,7 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
 
                     @Override
                     public void onNext(DataBean dataBean) {
-                        view.setList(dataBean.results,true);
+                        view.setList(dataBean.results, true);
 
                     }
 
@@ -83,8 +84,8 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
     @Override
     public void refresh(String type) {
         view.showProcess();
-        Log.i(TAG, "refresh: "+1);
-        gankApiService.getData(type,10,1)
+        Log.i(TAG, "refresh: " + 1);
+        gankApiService.getData(type, 10, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DataBean>() {
@@ -92,16 +93,17 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(DataBean dataBean) {
-                        view.setList(dataBean.results,false);
-                        String url = App.getmSahre().getString("meizi","");
-                        if (TextUtils.equals(type,"福利")){
-                            if (url.equals(dataBean.results.get(0).getUrl())){
+                        view.setList(dataBean.results, false);
+                        String url = App.getmSahre().getString("meizi", "");
+                        if (TextUtils.equals(type, "福利")) {
+                            if (url.equals(dataBean.results.get(0).getUrl())) {
 
-                            }else {
+                            } else {
                                 SharedPreferences.Editor editor = App.getmSahre().edit();
-                                editor.putString("meizi",dataBean.results.get(0).getUrl());
+                                editor.putString("meizi", dataBean.results.get(0).getUrl());
                                 editor.apply();
                             }
                             view.callBack.setMeizi();
@@ -113,6 +115,7 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                         e.printStackTrace();
                         view.dismissProcess();
                     }
+
                     @Override
                     public void onComplete() {
                         view.setCurrentPage(2);
@@ -124,22 +127,26 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
 
     @Override
     public void consumeClickEvent(View view, int position) {
-        if (position > -1){
-            if (pageType.equals("福利")){
+        if (position > -1) {
+            if (pageType.equals("福利")) {
                 this.view.showGirl(this.view.getGankBeans().get(position).getUrl());
             } else {
-                if (App.canChromeLoad){
+                if (App.canChromeLoad) {
                     launchUrl(this.view.getGankBeans().get(position).getUrl());
-                }else {
+                } else {
                     this.view.doJump(new Intent(this.view.getContext(), WebActivity.class)
-                            .putExtra("url",this.view.getGankBeans().get(position).getUrl())
-                            .putExtra("name",this.view.getGankBeans().get(position).getDesc()));
+                            .putExtra("url", this.view.getGankBeans().get(position).getUrl())
+                            .putExtra("name", this.view.getGankBeans().get(position).getDesc()));
                 }
             }
         } else {
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.close_btn:
                     this.view.closeGirl();
+                    break;
+                case R.id.float_fab:
+                    // TODO: 2018/1/9
+
             }
         }
     }
@@ -148,7 +155,7 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
     // 使用Chrome进行显示网页
     private void launchUrl(String url) {
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
-        intentBuilder.setToolbarColor(ContextCompat.getColor(view.getContext(),R.color.colorMainDark));
+        intentBuilder.setToolbarColor(ContextCompat.getColor(view.getContext(), R.color.colorMainDark));
         CustomTabsIntent intent = intentBuilder.build();
         intent.launchUrl(view.getContext(), Uri.parse(url));
     }

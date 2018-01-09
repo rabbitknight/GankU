@@ -29,8 +29,8 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContext = this.getActivity();
-        View view = LayoutInflater.from(mContext).inflate(getLayout(),container,false);
-        unbinder = ButterKnife.bind(this,view);
+        View view = LayoutInflater.from(mContext).inflate(getLayout(), container, false);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
@@ -53,6 +53,7 @@ public abstract class BaseFragment<T extends IBasePresenter> extends Fragment {
 
     //依赖注入入口
     protected abstract void initInject();
+
     //初始化View
     protected abstract void initViews();
 

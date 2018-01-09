@@ -6,7 +6,7 @@ package cn.southtree.ganku.common;
 
 public class Constants {
     public static final String API_START_IMG = "http://news-at.zhihu.com/api/4/start-image/1080*1776";
-    public static final String API_LATEST  = "http://news-at.zhihu.com/api/4/news/latest";
+    public static final String API_LATEST = "http://news-at.zhihu.com/api/4/news/latest";
     public static final String API_NEWS = "http://news-at.zhihu.com/api/4/news/{id}";
     public static final String API_BEFORE = "http://news.at.zhihu.com/api/4/news/before/{date}";
     public static final String API_EXTRA = "http://news-at.zhihu.com/api/4/story-extra/#{id}";
