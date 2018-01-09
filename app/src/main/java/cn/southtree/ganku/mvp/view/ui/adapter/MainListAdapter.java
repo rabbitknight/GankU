@@ -165,7 +165,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
                 if (data.get(position).getImages() != null && data.get(position).getImages().size() != 0) {
                     Glide.with(context)
                             .load(data.get(position).getImages().get(0))
-                            .apply(new RequestOptions().error(R.drawable.ic_snow).placeholder(R.drawable.ic_snow))
+                            .apply(new RequestOptions().error(R.drawable.ic_snow).placeholder(R.drawable.ic_snow).centerCrop())
                             .thumbnail(0.1f)
                             .into(((ItemViewHolder) holder).tvImg);
                 } else {

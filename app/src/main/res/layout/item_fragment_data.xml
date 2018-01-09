@@ -1,70 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_item_selector"
+    android:orientation="horizontal"
 
     >
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_desc"
-            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="微信个人微信个人微信个微信个人微信个人ss微信个微信ss个人微信个人微信个微信个Hhhhh"
-            android:textSize="15sp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:ellipsize="end"
             android:maxEms="20"
             android:maxLines="2"
-            android:ellipsize="end"
+            android:padding="5dp"
             android:textColor="@color/colorMainDark"
-            />
+            android:textSize="16sp"
+            tools:text="微信个人微信个人微信个微信个人微信个人ss微信个微信ss个人微信个人微信个微信个Hhhhh" />
+
         <LinearLayout
-            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="5dp">
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp">
+
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@drawable/ic_owner64"
                 android:layout_margin="5dp"
+                android:src="@drawable/ic_owner64"
 
                 />
+
             <TextView
                 android:id="@+id/tv_who"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="12sp"
-                android:textColor="@color/colorTextLight"
-                tools:text="小茜茜"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:layout_marginRight="15dp"
-                />
+                android:textColor="@color/colorTextLight"
+                android:textSize="12sp"
+                tools:text="小茜茜" />
+
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@drawable/ic_time64"
                 android:layout_margin="5dp"
-                />
+                android:src="@drawable/ic_time64" />
+
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="12sp"
-                android:textColor="@color/colorTextLight"
-                tools:text="小茜茜"
                 android:gravity="center"
-                />
+                android:textColor="@color/colorTextLight"
+                android:textSize="12sp"
+                tools:text="小茜茜" />
         </LinearLayout>
     </LinearLayout>
 
@@ -73,17 +77,17 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center"
-        >
+        android:gravity="center">
+
         <ImageView
             android:id="@+id/iv_img"
-            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher_round"
-            />
+            android:padding="3dp"
+            tools:src="@drawable/ic_snow"
+            android:background="@drawable/bg_img"/>
     </RelativeLayout>
 
 
