@@ -1,5 +1,7 @@
 package cn.southtree.ganku.mvp.view.ui.fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -85,8 +87,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     RecyclerView listRv;
     @BindView(R.id.swipe_srl)
     SwipeRefreshLayout swipeSrl;
-/*    @BindView(R.id.float_fab)
-    FloatingActionButton fab;*/
+
 
     //获取页面布局
     @Override
@@ -211,6 +212,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         Glide.with(mContext).load(url).into(imageViewWrap.getInstance());
         girlDialog.setView(content);
         girlDialog.show();
+        showAnimator(img);
     }
 
     @Override
@@ -253,5 +255,15 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
         if (mAdapter.getData().size() > 0) {
             listRv.smoothScrollToPosition(0);
         }
+    }
+
+    private void showAnimator(View view) {
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(view, "scaleX", 0.3f, 1.0f)
+                .setDuration(100);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(view, "scaleY", 0.3f, 1.0f)
+                .setDuration(100);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(animator1).with(animator2);
+        animatorSet.start();
     }
 }

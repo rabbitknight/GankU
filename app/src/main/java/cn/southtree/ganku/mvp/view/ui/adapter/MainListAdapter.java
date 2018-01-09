@@ -153,6 +153,9 @@ public class MainListAdapter extends RecyclerView.Adapter {
                     });
                 }
             } else {
+                if (!StringUtil.isNull(data.get(position).getType())) {
+                    ((ItemViewHolder) holder).tvType.setText(data.get(position).getType());
+                }
                 if (!StringUtil.isNull(data.get(position).getDesc())) {
                     ((ItemViewHolder) holder).tvDesc.setText(data.get(position).getDesc());
                 }
@@ -203,6 +206,8 @@ public class MainListAdapter extends RecyclerView.Adapter {
         ImageView tvImg;
         @BindView(R.id.rl_img)
         RelativeLayout rlImg;
+        @BindView(R.id.tv_type)
+        TextView tvType;
 
         ItemViewHolder(View itemView) {
             super(itemView);
