@@ -5,15 +5,16 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -35,6 +36,8 @@ import cn.southtree.ganku.mvp.view.interfaces.MainV;
 import cn.southtree.ganku.mvp.view.ui.adapter.MainViewPagerAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.OnActivity2FragCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
+import cn.southtree.ganku.mvp.view.ui.listener.ViewPagerChangeListener;
+import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
 import okhttp3.OkHttpClient;
 
 
@@ -42,8 +45,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         DrawerLayout.DrawerListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener,
         OnFrag2ActivityCallBack, AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "MainActivity";
-    @BindView(R.id.float_fab)
-    FloatingActionButton floatFab;
+
 
     private SparseBooleanArray tabs = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
@@ -55,6 +57,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     @Inject
     public MainPresenterImpl mainPresenter;
 
+    @BindView(R.id.float_fab)
+    FloatingActionButton floatFab;
+    @BindView(R.id.nav_nv)
+    NavigationView navNv;
     @BindView(R.id.tab_tl)
     TabLayout tabTl;
     @BindView(R.id.tool_ctl)
@@ -69,28 +75,25 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     CoordinatorLayout coordinatorCl;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.bg_iv)
-    ImageView bgIv;
-    @BindView(R.id.logo_iv)
-    ImageView logoIv;
     @BindView(R.id.nav_fl)
     FrameLayout navFl;
     @BindView(R.id.set_fl)
     FrameLayout setFl;
     @BindView(R.id.drawer_dl)
     DrawerLayout drawerDl;
-    @BindView(R.id.and_cb)
-    AppCompatCheckBox andCb;
-    @BindView(R.id.ios_cb)
-    AppCompatCheckBox iosCb;
-    @BindView(R.id.web_cb)
-    AppCompatCheckBox webCb;
-    @BindView(R.id.app_cb)
-    AppCompatCheckBox appCb;
-    @BindView(R.id.girl_cb)
-    AppCompatCheckBox girlCb;
+
+    private SwitchCompat onSc;
+    private SwitchCompat toSc;
+    private SwitchCompat thSc;
+    private SwitchCompat foSc;
+    private SwitchCompat fiSc;
+    private ImageView bgIv;
+
+    private boolean isScrolled;
+
 
     private CollapsingToolbarLayoutState state; // CollapsingToolbarLayout 折叠状态
+
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED, // 完全展开
@@ -132,16 +135,111 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs, this);
         contentVp.setAdapter(mAdapter);
         contentVp.setOffscreenPageLimit(5);
+        contentVp.addOnPageChangeListener(new ViewPagerChangeListener(contentVp, (isHeader) -> {
+            if (isHeader) {
+                drawerDl.openDrawer(navFl);
+            } else {
+                drawerDl.openDrawer(setFl);
+            }
+        }));
         //
         tabTl.setupWithViewPager(contentVp);
         //drawer
         drawerDl.addDrawerListener(this);
         //cb
-        andCb.setOnCheckedChangeListener(this);
-        appCb.setOnCheckedChangeListener(this);
-        girlCb.setOnCheckedChangeListener(this);
-        iosCb.setOnCheckedChangeListener(this);
-        webCb.setOnCheckedChangeListener(this);
+        onSc = (SwitchCompat) navNv.getMenu().findItem(R.id.on_item).getActionView();
+        toSc = (SwitchCompat) navNv.getMenu().findItem(R.id.to_item).getActionView();
+        thSc = (SwitchCompat) navNv.getMenu().findItem(R.id.th_item).getActionView();
+        foSc = (SwitchCompat) navNv.getMenu().findItem(R.id.fo_item).getActionView();
+        fiSc = (SwitchCompat) navNv.getMenu().findItem(R.id.fi_item).getActionView();
+        bgIv = navNv.getHeaderView(0).findViewById(R.id.bg_iv);
+
+        onSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (tabs.get(Constants.APP, false)) {
+                } else {
+                    tabs.put(Constants.APP, true);
+                    isChanged = true;
+                }
+
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.APP);
+                    isChanged = true;
+                }
+            }
+        });
+        toSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (tabs.get(Constants.ANDROID, false)) {
+
+                } else {
+                    tabs.put(Constants.ANDROID, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.ANDROID);
+                    isChanged = true;
+                }
+            }
+        });
+        thSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (tabs.get(Constants.IOS, false)) {
+
+                } else {
+                    tabs.put(Constants.IOS, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.IOS);
+                    isChanged = true;
+                }
+            }
+        });
+        foSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (tabs.get(Constants.WEB, false)) {
+
+                } else {
+                    tabs.put(Constants.WEB, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.WEB);
+                    isChanged = true;
+                }
+            }
+        });
+        fiSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (tabs.get(Constants.MEIZI, false)) {
+
+                } else {
+                    tabs.put(Constants.MEIZI, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.MEIZI);
+                    isChanged = true;
+                }
+
+            }
+        });
         //
         floatFab.setOnClickListener(this);
 
@@ -191,10 +289,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         mainPresenter.onConsumeClick(v);
     }
 
+    @Deprecated
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        Log.i(TAG, "onCheckedChanged: " + buttonView.getId());
         switch (buttonView.getId()) {
-            case R.id.and_cb:
+            case R.id.on_item:
                 if (isChecked) {
                     if (tabs.get(Constants.ANDROID, false)) {
 
@@ -208,7 +308,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
                 break;
-            case R.id.app_cb:
+            case R.id.to_item:
                 if (isChecked) {
                     if (tabs.get(Constants.APP, false)) {
 
@@ -221,7 +321,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
                 break;
-            case R.id.girl_cb:
+            case R.id.th_item:
                 if (isChecked) {
                     if (tabs.get(Constants.MEIZI, false)) {
 
@@ -234,7 +334,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
                 break;
-            case R.id.ios_cb:
+            case R.id.fo_item:
                 if (isChecked) {
                     if (tabs.get(Constants.IOS, false)) {
 
@@ -247,7 +347,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
                 break;
-            case R.id.web_cb:
+            case R.id.fi_item:
                 if (isChecked) {
                     if (tabs.get(Constants.WEB, false)) {
 

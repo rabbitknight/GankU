@@ -202,7 +202,7 @@ public class MainPagerFragment extends BaseFragment<MainPagerPresenter> implemen
     @Override
     public void doJump(Intent intent) {
         if (intent != null) {
-            startActivity(intent);
+            mContext.startActivity(intent);
         }
     }
 

@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:id="@+id/gp_group">
-        <item android:id="@+id/android_item"
-            android:title="Android"
-            android:checkable="true"
-            android:checked="false"
-            android:icon="@drawable/ic_android"/>
-        <item android:id="@+id/ios_item"
-            android:title="IOS"
-            android:checkable="true"
-            android:checked="false"
-            android:icon="@drawable/ic_ios"/>
-        <item android:id="@+id/web_item"
-            android:title="Web"
-            android:checkable="true"
-            android:checked="false"
-            android:icon="@drawable/ic_web"/>
-        <item android:id="@+id/app_item"
-            android:title="App"
-            android:checkable="true"
-            android:checked="false"
-            android:icon="@drawable/ic_app"/>
-        <item android:id="@+id/girl_item"
-            android:title="福利"
-            android:checkable="true"
-            android:checked="false"
-            android:icon="@drawable/ic_girl"/>
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="分类">
+        <menu>
+            <group
+                android:id="@+id/category_group"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/on_item"
+                    android:icon="@drawable/ic_app"
+                    android:title="@string/string_app"
+                    app:actionLayout="@layout/action_switcher"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/to_item"
+                    android:icon="@drawable/ic_android"
+                    android:title="@string/string_android"
+                    app:actionLayout="@layout/action_switcher"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/th_item"
+                    android:icon="@drawable/ic_ios"
+                    android:title="@string/string_ios"
+                    app:actionLayout="@layout/action_switcher"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/fo_item"
+                    android:icon="@drawable/ic_web"
+                    android:title="@string/string_web"
+                    app:actionLayout="@layout/action_switcher"
+                    app:showAsAction="ifRoom" />
+                <item
+                    android:id="@+id/fi_item"
+                    android:icon="@drawable/ic_girl"
+                    android:title="@string/string_meizi"
+                    app:actionLayout="@layout/action_switcher"
+                    app:showAsAction="ifRoom" />
+            </group>
+        </menu>
+
+    </item>
+
 
 </menu>

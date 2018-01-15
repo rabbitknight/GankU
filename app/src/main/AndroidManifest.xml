@@ -18,8 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.view.ui.activity.MainActivity"
-            android:launchMode="singleTask">
+        <activity android:name=".mvp.view.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,15 +27,13 @@
         <activity
             android:name=".mvp.view.ui.activity.TestActivity"
             android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme"
-            android:launchMode="singleTask"
-            >
+            android:theme="@style/AppTheme">
+
         </activity>
 
-        <activity android:name=".mvp.view.ui.activity.WebActivity"
-            android:launchMode="singleTask"
-            android:label=""
-            >
+        <activity
+            android:name=".mvp.view.ui.activity.WebActivity"
+            android:label="">
             <intent-filter>
                 <action android:name="com.tencent.smtt.tbs.video.PLAY" />
                 <category android:name="android.intent.category.DEFAULT" />

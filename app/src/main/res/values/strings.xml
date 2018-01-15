@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">GankU</string>
     <string name="title_activity_test">TestActivity</string>
+    <string-array name="action_name">
+        <item>APP</item>
+        <item>Android</item>
+        <item>IOS</item>
+        <item>Web</item>
+        <item>福利</item>
+    </string-array>
+    <string name="string_app">APP</string>
+    <string name="string_android">Android</string>
+    <string name="string_ios">IOS</string>
+    <string name="string_web">Web</string>
+    <string name="string_meizi">福利</string>
 </resources>

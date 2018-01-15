@@ -35,7 +35,7 @@
             android:text="hello,world!"
             />
     </FrameLayout>
-    <LinearLayout
+<!--    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal">
@@ -155,7 +155,6 @@
             android:checked="true"
             />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -188,5 +187,5 @@
     </LinearLayout>
     <ViewStub
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" />-->
 </LinearLayout>
