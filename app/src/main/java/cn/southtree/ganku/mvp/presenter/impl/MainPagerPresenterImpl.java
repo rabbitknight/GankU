@@ -106,6 +106,7 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
                                 editor.putString("meizi", dataBean.results.get(0).getUrl());
                                 editor.apply();
                             }
+
                             //view.callBack.setMeizi();
                         }
                     }
