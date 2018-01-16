@@ -1,6 +1,8 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
     private SparseArray<OnActivity2FragCallBack> callbacks = new SparseArray<>();
+    private SharedPreferences.Editor preferencesEditor;
 
     @Inject
     public OkHttpClient okHttpClient;
@@ -89,9 +92,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     private SwitchCompat fiSc;
     private ImageView bgIv;
 
-    private boolean isScrolled;
-
-
     private CollapsingToolbarLayoutState state; // CollapsingToolbarLayout 折叠状态
 
 
@@ -122,14 +122,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
 
     @Override
     protected void initViews() {
+        preferencesEditor = App.getmSahre().edit();
         //toolbar
         appbarApl.addOnOffsetChangedListener(this);
         //tab
-        tabs.put(Constants.APP, true);
-        tabs.put(Constants.ANDROID, true);
-        tabs.put(Constants.IOS, true);
-        tabs.put(Constants.WEB, true);
-        tabs.put(Constants.MEIZI, true);
+        if (App.getmSahre().getInt("tabs", -1) < 0) {
+            tabs.put(Constants.APP, true);
+            tabs.put(Constants.ANDROID, true);
+            tabs.put(Constants.IOS, true);
+            tabs.put(Constants.WEB, true);
+            tabs.put(Constants.MEIZI, true);
+        }
         mPresenter = mainPresenter;
         mPresenter.attachView(this);
         mAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), tabs, this);
@@ -144,9 +147,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         }));
         //
         tabTl.setupWithViewPager(contentVp);
-        //drawer
+        // drawer
         drawerDl.addDrawerListener(this);
-        //cb
+        // cb
         onSc = (SwitchCompat) navNv.getMenu().findItem(R.id.on_item).getActionView();
         toSc = (SwitchCompat) navNv.getMenu().findItem(R.id.to_item).getActionView();
         thSc = (SwitchCompat) navNv.getMenu().findItem(R.id.th_item).getActionView();
@@ -242,6 +245,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         });
         //
         floatFab.setOnClickListener(this);
+        setMeizi();
 
     }
 
@@ -393,5 +397,53 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         }
     }
 
+    @Override
+    protected void onPause() {
+        int tab = 0;
+        for (int i = 0; i < tabs.size(); i++) {
+            if (tabs.valueAt(i)) {
+                tab += tabs.keyAt(i);
+            }
+            Log.i(TAG, "onPause: " + tabs.toString());
+        }
+        Log.i(TAG, "onPause: tab=" + tab);
+        preferencesEditor.putInt("tabs", tab);
+        preferencesEditor.apply();
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int tab = App.getmSahre().getInt("tabs", -1);
+        Log.i(TAG, "onResume: tab=" + tab);
+
+        if (tab > 0) {
+            // 开关的值用一个int表示，每一位代表一个开关。
+            for (int i = 0; i < 5; i++) {
+                if (1 == (tab >> i & 1)) {
+                    tabs.put(tab & 1 << i, true);
+                    switch (1 << i) {
+                        case 1:
+                            onSc.setChecked(true);
+                            break;
+                        case 2:
+                            toSc.setChecked(true);
+                            break;
+                        case 4:
+                            thSc.setChecked(true);
+                            break;
+                        case 8:
+                            foSc.setChecked(true);
+                            break;
+                        case 16:
+                            fiSc.setChecked(true);
+                            break;
+                    }
+                }
+
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }

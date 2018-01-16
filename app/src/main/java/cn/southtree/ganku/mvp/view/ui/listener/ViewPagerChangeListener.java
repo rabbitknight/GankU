@@ -50,7 +50,7 @@ public class ViewPagerChangeListener implements ViewPager.OnPageChangeListener {
                 isScrolled = true;
                 break;
             case ViewPager.SCROLL_STATE_IDLE:
-                if (viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1 && !isScrolled) {
+                if (1 != viewPager.getAdapter().getCount() && viewPager.getCurrentItem() == viewPager.getAdapter().getCount() - 1 && !isScrolled) {
                     onScrolled.scroll(false);
                 } else if (0 == viewPager.getCurrentItem() && !isScrolled) {
                     onScrolled.scroll(true);

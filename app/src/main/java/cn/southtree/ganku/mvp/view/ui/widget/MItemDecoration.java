@@ -55,7 +55,7 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
             final int bottom = (int) (mBound.bottom - child.getTranslationY());
             final int top = bottom - mHeight;
             c.save();
-            c.drawRect(left, top, right, bottom, mPaint);
+            c.drawRect(left + 20, top, right - 20, bottom, mPaint);
             c.restore();
         }
     }
