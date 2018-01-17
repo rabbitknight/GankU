@@ -28,5 +28,4 @@
         android:padding="16dp"
         android:text="hello,world!"
         />
-
 </FrameLayout>

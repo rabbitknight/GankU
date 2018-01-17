@@ -156,93 +156,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         foSc = (SwitchCompat) navNv.getMenu().findItem(R.id.fo_item).getActionView();
         fiSc = (SwitchCompat) navNv.getMenu().findItem(R.id.fi_item).getActionView();
         bgIv = navNv.getHeaderView(0).findViewById(R.id.bg_iv);
-
-        onSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (tabs.get(Constants.APP, false)) {
-                } else {
-                    tabs.put(Constants.APP, true);
-                    isChanged = true;
-                }
-
-            } else {
-                if (1 == tabs.size()) {
-                    buttonView.setChecked(true);
-                } else {
-                    tabs.delete(Constants.APP);
-                    isChanged = true;
-                }
-            }
-        });
-        toSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (tabs.get(Constants.ANDROID, false)) {
-
-                } else {
-                    tabs.put(Constants.ANDROID, true);
-                    isChanged = true;
-                }
-            } else {
-                if (1 == tabs.size()) {
-                    buttonView.setChecked(true);
-                } else {
-                    tabs.delete(Constants.ANDROID);
-                    isChanged = true;
-                }
-            }
-        });
-        thSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (tabs.get(Constants.IOS, false)) {
-
-                } else {
-                    tabs.put(Constants.IOS, true);
-                    isChanged = true;
-                }
-            } else {
-                if (1 == tabs.size()) {
-                    buttonView.setChecked(true);
-                } else {
-                    tabs.delete(Constants.IOS);
-                    isChanged = true;
-                }
-            }
-        });
-        foSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (tabs.get(Constants.WEB, false)) {
-
-                } else {
-                    tabs.put(Constants.WEB, true);
-                    isChanged = true;
-                }
-            } else {
-                if (1 == tabs.size()) {
-                    buttonView.setChecked(true);
-                } else {
-                    tabs.delete(Constants.WEB);
-                    isChanged = true;
-                }
-            }
-        });
-        fiSc.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (tabs.get(Constants.MEIZI, false)) {
-
-                } else {
-                    tabs.put(Constants.MEIZI, true);
-                    isChanged = true;
-                }
-            } else {
-                if (1 == tabs.size()) {
-                    buttonView.setChecked(true);
-                } else {
-                    tabs.delete(Constants.MEIZI);
-                    isChanged = true;
-                }
-
-            }
-        });
+        onSc.setOnCheckedChangeListener(this);
+        toSc.setOnCheckedChangeListener(this);
+        thSc.setOnCheckedChangeListener(this);
+        foSc.setOnCheckedChangeListener(this);
+        fiSc.setOnCheckedChangeListener(this);
         //
         floatFab.setOnClickListener(this);
         setMeizi();
@@ -296,77 +214,89 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     @Deprecated
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.i(TAG, "onCheckedChanged: " + buttonView.getId());
-        switch (buttonView.getId()) {
-            case R.id.on_item:
-                if (isChecked) {
-                    if (tabs.get(Constants.ANDROID, false)) {
-
-                    } else {
-                        tabs.put(Constants.ANDROID, true);
-                        isChanged = true;
-                    }
-
+        Log.i(TAG, "onCheckedChanged: " + buttonView.getId()+",parent="+buttonView.getParent()+ ", tag="+buttonView.getTag());
+        int id = buttonView.getId();
+        if (id == onSc.getId()){
+            if (isChecked) {
+                if (tabs.get(Constants.APP, false)) {
                 } else {
-                    tabs.delete(Constants.ANDROID);
+                    tabs.put(Constants.APP, true);
                     isChanged = true;
                 }
-                break;
-            case R.id.to_item:
-                if (isChecked) {
-                    if (tabs.get(Constants.APP, false)) {
 
-                    } else {
-                        tabs.put(Constants.APP, true);
-                        isChanged = true;
-                    }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
                 } else {
                     tabs.delete(Constants.APP);
                     isChanged = true;
                 }
-                break;
-            case R.id.th_item:
-                if (isChecked) {
-                    if (tabs.get(Constants.MEIZI, false)) {
+            }
+        }else if (id == toSc.getId()){
+            if (isChecked) {
+                if (tabs.get(Constants.ANDROID, false)) {
 
-                    } else {
-                        tabs.put(Constants.MEIZI, true);
-                        isChanged = true;
-                    }
                 } else {
-                    tabs.delete(Constants.MEIZI);
+                    tabs.put(Constants.ANDROID, true);
                     isChanged = true;
                 }
-                break;
-            case R.id.fo_item:
-                if (isChecked) {
-                    if (tabs.get(Constants.IOS, false)) {
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.ANDROID);
+                    isChanged = true;
+                }
+            }
+        }else if (id == thSc.getId()){
+            if (isChecked) {
+                if (tabs.get(Constants.IOS, false)) {
 
-                    } else {
-                        tabs.put(Constants.IOS, true);
-                        isChanged = true;
-                    }
+                } else {
+                    tabs.put(Constants.IOS, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
                 } else {
                     tabs.delete(Constants.IOS);
                     isChanged = true;
                 }
-                break;
-            case R.id.fi_item:
-                if (isChecked) {
-                    if (tabs.get(Constants.WEB, false)) {
+            }
+        }else if (id == foSc.getId()){
+            if (isChecked) {
+                if (tabs.get(Constants.WEB, false)) {
 
-                    } else {
-                        tabs.put(Constants.WEB, true);
-                        isChanged = true;
-                    }
+                } else {
+                    tabs.put(Constants.WEB, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
                 } else {
                     tabs.delete(Constants.WEB);
                     isChanged = true;
-
                 }
-                break;
-            default:
-                break;
+            }
+        }else if (id == fiSc.getId()){
+            if (isChecked) {
+                if (tabs.get(Constants.MEIZI, false)) {
+
+                } else {
+                    tabs.put(Constants.MEIZI, true);
+                    isChanged = true;
+                }
+            } else {
+                if (1 == tabs.size()) {
+                    buttonView.setChecked(true);
+                } else {
+                    tabs.delete(Constants.MEIZI);
+                    isChanged = true;
+                }
+
+            }
         }
     }
 
