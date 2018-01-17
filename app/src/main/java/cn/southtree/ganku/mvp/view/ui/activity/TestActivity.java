@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
-
+@Deprecated
 public class TestActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)

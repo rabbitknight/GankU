@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
     private SparseArray<OnActivity2FragCallBack> callbacks = new SparseArray<>();
-    private SharedPreferences.Editor preferencesEditor;
 
     @Inject
     public OkHttpClient okHttpClient;
@@ -122,10 +121,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
 
     @Override
     protected void initViews() {
-        preferencesEditor = App.getmSahre().edit();
-        //toolbar
+        // toolbar
         appbarApl.addOnOffsetChangedListener(this);
-        //tab
+        // tab
         if (App.getmSahre().getInt("tabs", -1) < 0) {
             tabs.put(Constants.APP, true);
             tabs.put(Constants.ANDROID, true);
@@ -145,7 +143,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                 drawerDl.openDrawer(setFl);
             }
         }));
-        //
+        // tab
         tabTl.setupWithViewPager(contentVp);
         // drawer
         drawerDl.addDrawerListener(this);
@@ -161,7 +159,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         thSc.setOnCheckedChangeListener(this);
         foSc.setOnCheckedChangeListener(this);
         fiSc.setOnCheckedChangeListener(this);
-        //
+        // fab
         floatFab.setOnClickListener(this);
         setMeizi();
 
@@ -211,12 +209,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         mainPresenter.onConsumeClick(v);
     }
 
-    @Deprecated
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.i(TAG, "onCheckedChanged: " + buttonView.getId()+",parent="+buttonView.getParent()+ ", tag="+buttonView.getTag());
+        Log.i(TAG, "onCheckedChanged: " + buttonView.getId() + ",parent=" + buttonView.getParent() + ", tag=" + buttonView.getTag());
         int id = buttonView.getId();
-        if (id == onSc.getId()){
+        if (id == onSc.getId()) {
             if (isChecked) {
                 if (tabs.get(Constants.APP, false)) {
                 } else {
@@ -232,7 +229,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
             }
-        }else if (id == toSc.getId()){
+        } else if (id == toSc.getId()) {
             if (isChecked) {
                 if (tabs.get(Constants.ANDROID, false)) {
 
@@ -248,7 +245,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
             }
-        }else if (id == thSc.getId()){
+        } else if (id == thSc.getId()) {
             if (isChecked) {
                 if (tabs.get(Constants.IOS, false)) {
 
@@ -264,7 +261,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
             }
-        }else if (id == foSc.getId()){
+        } else if (id == foSc.getId()) {
             if (isChecked) {
                 if (tabs.get(Constants.WEB, false)) {
 
@@ -280,7 +277,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                     isChanged = true;
                 }
             }
-        }else if (id == fiSc.getId()){
+        } else if (id == fiSc.getId()) {
             if (isChecked) {
                 if (tabs.get(Constants.MEIZI, false)) {
 
@@ -337,8 +334,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
             Log.i(TAG, "onPause: " + tabs.toString());
         }
         Log.i(TAG, "onPause: tab=" + tab);
-        preferencesEditor.putInt("tabs", tab);
-        preferencesEditor.apply();
+        App.getmSahre().edit().putInt("tabs", tab).apply();
         super.onPause();
     }
 
