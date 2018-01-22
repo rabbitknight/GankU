@@ -40,6 +40,7 @@ import cn.southtree.ganku.mvp.view.ui.listener.OnActivity2FragCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.ViewPagerChangeListener;
 import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
+import cn.southtree.ganku.mvp.view.ui.widget.IndicatorView;
 import okhttp3.OkHttpClient;
 
 
@@ -83,6 +84,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     FrameLayout setFl;
     @BindView(R.id.drawer_dl)
     DrawerLayout drawerDl;
+    @BindView(R.id.indicator_iv)
+    IndicatorView indicatorView;
 
     private SwitchCompat onSc;
     private SwitchCompat toSc;
@@ -162,6 +165,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         // fab
         floatFab.setOnClickListener(this);
         setMeizi();
+        indicatorView.setViewPager(contentVp);
+        contentVp.addOnPageChangeListener(indicatorView);
 
     }
 
@@ -370,6 +375,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
 
             }
             mAdapter.notifyDataSetChanged();
+            indicatorView.setTagCount(mAdapter.getCount());
         }
     }
 }

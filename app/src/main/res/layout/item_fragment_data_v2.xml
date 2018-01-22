@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_item_selector"
+    android:orientation="horizontal"
+
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_img"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:foreground="@drawable/bg_img"
+                tools:src="@drawable/ic_snow" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="20"
+            android:maxLines="2"
+            android:textColor="@color/colorMainDark"
+            android:textSize="18sp"
+            tools:text="微信个人微信个人微信个微信个人微信个人ss微信个微信ss个人微信个人微信个微信个Hhhhh" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/v_stub"
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/colorMainGray" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorMainGray"
+                android:paddingRight="5dp"
+                android:paddingEnd="5dp"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:textSize="12sp"
+                android:gravity="center"
+                tools:text="Android" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_owner64" />
+
+            <TextView
+                android:id="@+id/tv_who"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textColor="@color/colorTextLight"
+                android:textSize="12sp"
+                tools:text="小茜茜" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_time64" />
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorTextLight"
+                android:textSize="12sp"
+                tools:text="小茜茜" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

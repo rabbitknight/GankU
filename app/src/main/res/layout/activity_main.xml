@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:id="@+id/girl_iv"
-                    android:layout_width="match_parent"
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:clipToPadding="true"
                     android:fitsSystemWindows="true" />
@@ -43,11 +43,15 @@
                     android:layout_gravity="bottom"
                     android:layout_marginTop="25dp"
                     app:layout_collapseMode="pin">
+                    <cn.southtree.ganku.mvp.view.ui.widget.IndicatorView
+                        android:id="@+id/indicator_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize" />
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tab_tl"
                         android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize"
+                        android:layout_height="0px"
                         android:layout_gravity="bottom"
                         android:layout_marginBottom="1dp">
 

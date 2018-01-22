@@ -116,7 +116,7 @@ public class MainListAdapter extends RecyclerView.Adapter {
                 view = LayoutInflater.from(context).inflate(R.layout.item_fragment_meizi, parent, false);
                 return new MeiziViewHolder(view);
             } else {
-                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_data, parent, false);
+                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_data_v2, parent, false);
                 return new ItemViewHolder(view);
             }
 
