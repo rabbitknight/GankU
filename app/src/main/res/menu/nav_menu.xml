@@ -40,6 +40,8 @@
         </menu>
 
     </item>
+    <item android:id="@+id/about"
+        android:title="@string/string_about" />
 
 
 </menu>

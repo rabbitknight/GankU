@@ -1,11 +1,15 @@
 package cn.southtree.ganku.mvp.view.ui.adapter;
 
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -42,7 +46,8 @@ import dagger.Component;
 
 public class MainListAdapter extends RecyclerView.Adapter {
     private final static String TAG = "MainListAdapter";
-    private static final int COMMON = 10086;
+    private static final int COMMON_NOIMG = 10086;
+    private static final int COMMON_IMG = 10000;
     private static final int FOOTER = 10010;
 
     private int lastPosition = 0;
@@ -105,12 +110,13 @@ public class MainListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        return position == data.size() ? FOOTER : COMMON;
+        return position == data.size() ?
+                FOOTER : data.get(position).getImages() == null ? COMMON_NOIMG : COMMON_IMG;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == COMMON) {
+        if (viewType == COMMON_IMG) {
             View view;
             if (isMeizi) {
                 view = LayoutInflater.from(context).inflate(R.layout.item_fragment_meizi, parent, false);
@@ -123,15 +129,26 @@ public class MainListAdapter extends RecyclerView.Adapter {
         } else if (viewType == FOOTER) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_footer, parent, false);
             return new FooterViewHolder(view);
+        } else if (viewType == COMMON_NOIMG) {
+            View view;
+            if (isMeizi) {
+                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_meizi, parent, false);
+                return new MeiziViewHolder(view);
+            } else {
+                view = LayoutInflater.from(context).inflate(R.layout.item_fragment_data, parent, false);
+                return new ItemViewHolder(view);
+            }
         } else {
             return null;
         }
 
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == COMMON) {
+
+        if (getItemViewType(position) == COMMON_NOIMG || getItemViewType(position) == COMMON_IMG) {
             if (isMeizi) {
                 if (!StringUtil.isNull(data.get(position).getUrl())) {
                     Glide.with(context)
@@ -183,6 +200,9 @@ public class MainListAdapter extends RecyclerView.Adapter {
             }
             showItemAnimator(position, holder.itemView);
         } else if (getItemViewType(position) == FOOTER) {
+            AnimatedVectorDrawable drawable = (AnimatedVectorDrawable) ContextCompat.getDrawable(context, R.drawable.animator_cat);
+            ((FooterViewHolder) holder).imgIv.setImageDrawable(drawable);
+            drawable.start();
             showItemAnimator(position, holder.itemView);
         } else {
             return;
@@ -217,6 +237,11 @@ public class MainListAdapter extends RecyclerView.Adapter {
     }
 
     static class FooterViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img_iv)
+        ImageView imgIv;
+        @BindView(R.id.desc_tv)
+        TextView descTv;
+
         public FooterViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

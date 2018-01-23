@@ -31,7 +31,7 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
         this.mContext = context;
         mBound = new Rect();
         mPaint = new Paint();
-        colorId = R.color.colorDividerGray;
+        colorId = R.color.colorMainWhite;
         mHeight = 2;
         mPaint.setColor(ContextCompat.getColor(mContext, colorId));
     }
@@ -55,7 +55,7 @@ public class MItemDecoration extends RecyclerView.ItemDecoration {
             final int bottom = (int) (mBound.bottom - child.getTranslationY());
             final int top = bottom - mHeight;
             c.save();
-            c.drawRect(left + 20, top, right - 20, bottom, mPaint);
+            c.drawRect(left, top, right, bottom, mPaint);
             c.restore();
         }
     }

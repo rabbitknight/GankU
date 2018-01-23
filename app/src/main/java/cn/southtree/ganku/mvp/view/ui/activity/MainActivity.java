@@ -1,8 +1,5 @@
 package cn.southtree.ganku.mvp.view.ui.activity;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -25,7 +21,6 @@ import android.widget.ImageView;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.southtree.ganku.App;
 import cn.southtree.ganku.R;
 import cn.southtree.ganku.common.Constants;
@@ -39,7 +34,6 @@ import cn.southtree.ganku.mvp.view.ui.adapter.MainViewPagerAdapter;
 import cn.southtree.ganku.mvp.view.ui.listener.OnActivity2FragCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.OnFrag2ActivityCallBack;
 import cn.southtree.ganku.mvp.view.ui.listener.ViewPagerChangeListener;
-import cn.southtree.ganku.mvp.view.ui.widget.ImageViewWrap;
 import cn.southtree.ganku.mvp.view.ui.widget.IndicatorView;
 import okhttp3.OkHttpClient;
 
@@ -53,6 +47,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     private SparseBooleanArray tabs = new SparseBooleanArray();
     private MainViewPagerAdapter mAdapter;
     private boolean isChanged = false;
+    private int tempState;
     private SparseArray<OnActivity2FragCallBack> callbacks = new SparseArray<>();
 
     @Inject
@@ -133,6 +128,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
             tabs.put(Constants.IOS, true);
             tabs.put(Constants.WEB, true);
             tabs.put(Constants.MEIZI, true);
+        } else {
+
         }
         mPresenter = mainPresenter;
         mPresenter.attachView(this);
@@ -165,8 +162,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
         // fab
         floatFab.setOnClickListener(this);
         setMeizi();
-        indicatorView.setViewPager(contentVp);
-        contentVp.addOnPageChangeListener(indicatorView);
+        //indicatorView.setupWithViewPager(contentVp);
+        //indicatorView.setTagCount(5);
+
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
@@ -199,6 +201,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
     public void onDrawerClosed(View drawerView) {
         if (isChanged) {
             mAdapter.notifyDataSetChanged();
+            indicatorView.setupWithViewPager(contentVp);
         }
 
         isChanged = false;
@@ -336,9 +339,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
             if (tabs.valueAt(i)) {
                 tab += tabs.keyAt(i);
             }
-            Log.i(TAG, "onPause: " + tabs.toString());
         }
-        Log.i(TAG, "onPause: tab=" + tab);
+        tempState = tab;
         App.getmSahre().edit().putInt("tabs", tab).apply();
         super.onPause();
     }
@@ -372,10 +374,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainV,
                             break;
                     }
                 }
-
             }
+        }
+
+        if (tempState != tab) {
             mAdapter.notifyDataSetChanged();
-            indicatorView.setTagCount(mAdapter.getCount());
+            indicatorView.setupWithViewPager(contentVp);
         }
     }
+
 }

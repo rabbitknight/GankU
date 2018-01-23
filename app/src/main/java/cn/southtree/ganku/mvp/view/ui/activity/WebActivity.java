@@ -92,6 +92,12 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
         initWebView();
 
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
     @Override
     public void onBackPressed() {
         if (x5webWv.canGoBack()) {

@@ -13,4 +13,7 @@
     <string name="string_ios">IOS</string>
     <string name="string_web">Web</string>
     <string name="string_meizi">福利</string>
+    <string name="string_about">about</string>
+    <string name="string_about_content">略略略</string>
+    <string name="string_load">正在加载。。。</string>
 </resources>

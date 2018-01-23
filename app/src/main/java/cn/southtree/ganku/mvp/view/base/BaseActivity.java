@@ -22,8 +22,8 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
  */
 
 public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatActivity {
-    protected T mPresenter;         //注入presenter
-    protected Activity mContext;    //当前环境上下文
+    protected T mPresenter;         // 注入presenter
+    protected Activity mContext;    // 当前环境上下文
     protected Unbinder unbinder;
 
 
@@ -35,15 +35,16 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
         unbinder = ButterKnife.bind(this);
         mContext = this;
         initInject();
+        initData();
         initViews();
     }
 
     private void initStatusBar() {
-        //透明状态栏
+        // 透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
+            // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //透明导航栏
+            // 透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
@@ -55,12 +56,15 @@ public abstract class BaseActivity<T extends IBasePresenter> extends AppCompatAc
         unbinder.unbind();
     }
 
-    //获取LayoutId：R.layout.id
+    // 获取LayoutId：R.layout.id
     protected abstract int getLayout();
 
-    //依赖注入入口
+    // 依赖注入入口
     protected abstract void initInject();
 
-    //初始化View
+    // 初始化View
     protected abstract void initViews();
+
+    // 初始化数据
+    protected abstract void initData();
 }

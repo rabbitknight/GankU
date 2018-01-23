@@ -29,32 +29,19 @@ import cn.southtree.ganku.R;
 
 public class IndicatorView extends View implements ViewPager.OnPageChangeListener {
     private static final String TAG = "IndicatorView";
-    private static final float M = 0.552284748831f;
+    private static final float M = 0.552284749831f;
 
-    private Paint mPaint;
-    private Path mPath;
     private int mHeight;
     private int mWidth;
-    private int count = 4;              // 指示器的个数
-    private int pos = 0;
+    private int count = 0;              // 指示器的个数
     private int eachWidth = 0;
-    private boolean isFirst = true;
 
     private BezierCircle bezierCircle;
-    private ValueAnimator valueAnimator1;
-    private ControlPoint edgePoint;  // 画布左控制点
+    private ControlPoint edgePoint;     // 画布左控制点
 
     private List<Rect> rects = new ArrayList<>();
-
-
-    private ViewPager mViewPager;
-    private ViewPager.OnPageChangeListener onPageChangeListener;
-
-    public void setViewPager(ViewPager vp) {
-        this.mViewPager = vp;
-        count = vp.getAdapter().getCount();
-    }
-
+    private Paint mPaint;               // 画笔，绘制颜色
+    private ViewPager mViewPager;       // 持有viewPager
 
     public IndicatorView(Context context) {
         this(context, null);
@@ -64,8 +51,7 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         super(context, attrs);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);  // 抗锯齿
-        mPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        mPath = new Path();
+        mPaint.setColor(ContextCompat.getColor(context, R.color.colorIndicator));
         bezierCircle = new BezierCircle();
         edgePoint = new ControlPoint(0, 0, 0);
 
@@ -73,63 +59,49 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
 
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.i(TAG, "onLayout: +"+top+","+bottom);
-        super.onLayout(changed, left, top, right, bottom);
-        mHeight = getMeasuredHeight();
-        mWidth = getMeasuredWidth();
-    }
-
-
-    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int minR = 50;
-        switch (heightMode) {
-            case MeasureSpec.AT_MOST:
-            case MeasureSpec.UNSPECIFIED:
-                heightSize = 2 * minR + 60;        //默认30的内边距
-                break;
+        mWidth = getMeasuredWidth();
+        mHeight = getMeasuredHeight();
+        if (count != 0 && mWidth != 0) {
+            eachWidth = getMeasuredWidth() / count;
+            rects.clear();
+            for (int i = 0; i < count; i++) {
+                rects.add(new Rect(i * eachWidth, 0, (i + 1) * eachWidth, mHeight));
+            }
+            bezierCircle.init(rects.get(0).centerX(), rects.get(0).centerY(), mHeight > eachWidth ? eachWidth / 3 : mHeight / 3);
+            edgePoint.setX(eachWidth * mViewPager.getCurrentItem());
         }
-        setMeasuredDimension(widthSize, heightSize);
+
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.save();
-        canvas.translate(edgePoint.getX(), 0);
-        canvas.drawPath(bezierCircle.getPath(), mPaint);
-        canvas.restore();
+        translate(canvas, edgePoint.getX(), 0);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            valueAnimator1.start();
+            // TODO: 2018/1/23 控制
         }
         return true;
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        boolean toRight = position + positionOffset - pos > 0;
+        boolean toRight = position + positionOffset - eachWidth * mViewPager.getCurrentItem() > 0;
         setBezierFlexible(position, positionOffset, toRight);
         edgePoint.setX(eachWidth * (position + positionOffset));
-        Log.i(TAG, "onPageScrolled: " + edgePoint.getX());
         if (positionOffset == 0) {
-            if (toRight) {
-                pos++;
-            } else {
-                pos--;
-            }
+            // 修复圆
+            bezierCircle.left.setX(rects.get(0).centerX() - bezierCircle.r);
+            bezierCircle.top.setX(rects.get(0).centerX());
+            bezierCircle.right.setX(rects.get(0).centerX() + bezierCircle.r);
+            bezierCircle.bottom.setX(rects.get(0).centerX());
         }
-        postInvalidate();
-
-
     }
 
     @Override
@@ -142,25 +114,34 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
 
     }
 
-    //
-    private void translatePos() {
-
+    /**
+     * 配合viewPager使用
+     *
+     * @param vp ViewPager
+     */
+    public void setupWithViewPager(ViewPager vp) {
+        this.mViewPager = vp;
+        count = vp.getAdapter().getCount();
+        vp.addOnPageChangeListener(this);
     }
 
-    // 初始化根据tab个数，初始化部分布局
+    // 移动
+    private void translate(Canvas canvas, float x, float y) {
+        canvas.save();
+        canvas.translate(x, y);
+        canvas.drawPath(bezierCircle.getPath(), mPaint);
+        canvas.restore();
+    }
+
+    /**
+     * 初始化根据tab个数，初始化部分布局
+     *
+     * @param count tab个数
+     * @see this.setupWithViewPager(ViewPager)
+     */
+    @Deprecated
     public void setTagCount(int count) {
         this.count = count;
-        eachWidth = 1080 / count;
-        rects = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            rects.add(new Rect(i * eachWidth, 0, (i + 1) * eachWidth, 200));
-        }
-        Log.i(TAG, "setTagCount: " + rects);
-        pos = mViewPager.getCurrentItem();
-        bezierCircle.init(rects.get(pos).centerX(), rects.get(pos).centerY(), mHeight > eachWidth ? eachWidth / 3 : mHeight / 3);
-        edgePoint.setX(0);
-        postInvalidate();
-
     }
 
     /**
@@ -172,9 +153,8 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
      */
     private void setBezierFlexible(int position, float offset, boolean toRight) {
         // 注：向左向右是一个近似对等的，向左滑动时的形变可能就是向右滑动时的位置恢复！
-        if (offset > 0 && offset <= 0.2) {  // 右控制点向右偏移；右控制点恢复
-            bezierCircle.setFlexible(offset * 5,
-                    BezierCircle.STATE_CHANGE_RIGHT);
+        if (offset > 0 && offset <= 0.2f) {  // 右控制点向右偏移；右控制点恢复
+            bezierCircle.setFlexible(offset * 5, BezierCircle.STATE_CHANGE_RIGHT);
         } else if (offset > 0.2f && offset <= 0.5f) {
             if (!toRight) { // null；左控制点回收，右控制点移动，上下点向左移动
                 bezierCircle.setFlexible((offset - 0.2f) * 10 / 3, BezierCircle.STATE_CHANGE_LEFT);
@@ -209,8 +189,12 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         private float flexibleX = 1.0f;
         private float flexibleY = 1.0f;
 
-        public float getX() {
+        @Override
+        public String toString() {
+            return "{x=" + getX() + ",y=" + getY() + ",r=" + d + "}";
+        }
 
+        public float getX() {
             return x * flexibleX;
         }
 
@@ -268,7 +252,7 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
             this.d = d;
         }
 
-        public void setXY(int x, int y) {
+        public void setXY(float x, float y) {
             setX(x);
             setY(y);
         }
@@ -287,12 +271,9 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
             setXYZ(x, y, d);
         }
 
-        public void translateX(float dx) {
-            this.x += dx;
-        }
-
     }
 
+    // 贝塞尔曲线拟合圆，通过改变控制点，来控制圆的形变
     class BezierCircle {
         public static final int STATE_0 = 0;                        // 预留
         public static final int STATE_CHANGE_RIGHT = 2;             // 右形变
@@ -311,15 +292,14 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
         private ControlPoint bottom;
         private Path mPath;
 
-        // 弹性控制
-
         // 中心点坐标
         private float x;
         private float y;
         private float r;
 
-        private float finalModX = 1 * 1f;
-        private float middleModX = 1 * 1f / 2;
+        // 弹性控制系数
+        private float finalModX = 1 * 4f;
+        private float middleModX = finalModX / 2;
 
         public BezierCircle(float x, float y, float r) {
             init(x, y, r);
@@ -359,17 +339,6 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
             return mPath;
         }
 
-        // 位置移动 distance x Or y
-        @Deprecated
-        public void translate(float dx, float dy) {
-            x += dx;
-            y += dy;
-            //更改坐标
-            init(x, y, r);
-            // 请求重绘
-            //invalidate();
-        }
-
         // 形变，过程中基于bezierCircle的X or Y坐标进行形变
         // abs:flexible [0-1.0)
         public void setFlexible(float flexible, int state) {
@@ -405,6 +374,7 @@ public class IndicatorView extends View implements ViewPager.OnPageChangeListene
                     bottom.setX(this.x - (1 - flexible) * r * middleModX);
                     break;
             }
+            Log.i(TAG, "setFlexible: " + left.getX() + ",r" + bezierCircle.left.d);
         }
 
     }

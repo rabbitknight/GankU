@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:id="@+id/girl_iv"
-                    android:layout_width="0px"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:clipToPadding="true"
                     android:fitsSystemWindows="true" />
@@ -43,19 +43,29 @@
                     android:layout_gravity="bottom"
                     android:layout_marginTop="25dp"
                     app:layout_collapseMode="pin">
-                    <cn.southtree.ganku.mvp.view.ui.widget.IndicatorView
-                        android:id="@+id/indicator_iv"
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize" />
 
-                    <android.support.design.widget.TabLayout
-                        android:id="@+id/tab_tl"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="1dp">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                    </android.support.design.widget.TabLayout>
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tab_tl"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:layout_marginBottom="1dp"
+                            app:tabIndicatorHeight="0dp" />
+
+                        <cn.southtree.ganku.mvp.view.ui.widget.IndicatorView
+                            android:id="@+id/indicator_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginBottom="2dp" />
+                    </RelativeLayout>
+
                 </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -66,6 +76,7 @@
             android:id="@+id/content_vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPadding"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v4.view.ViewPager>
@@ -95,12 +106,13 @@
         android:layout_gravity="start"
         android:clickable="true"
         android:focusable="true">
+
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_nv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:menu="@menu/nav_menu"
-            app:headerLayout="@layout/nav_header">
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/nav_menu">
 
 
         </android.support.design.widget.NavigationView>
