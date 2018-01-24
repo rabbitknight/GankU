@@ -38,10 +38,10 @@
 ```
 ### 运行Demo
 1. launcher
-![launcher](https://github.com/rabbitknight/GankU/gifs/gif_launcher2.gif)
+![launcher](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_launcher2.gif)
 2. Main
-![main1](https://github.com/rabbitknight/GankU/gifs/gif_main1.gif)
+![main1](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_main1.gif)
 3. Main2
-![main2](https://github.com/rabbitknight/GankU/gifs/gif_main2.gif)
+![main2](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_main2.gif)
 4. Web
-![web](https://github.com/rabbitknight/GankU/gifs/gif_web.gif)
+![web](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_web.gif)
