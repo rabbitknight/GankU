@@ -9,9 +9,12 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
  */
 
 public interface MainPagerPresenter extends IBasePresenter {
-    void loadMore(int currentPage,String type);     //进行加载
+    void loadMore(int currentPage, String type);     //进行加载
+
     void refresh(String type);                      //刷新
+
     void consumeClickEvent(View view, int position);//消费点击事件
+
     void setPageType(String type);
 
 }

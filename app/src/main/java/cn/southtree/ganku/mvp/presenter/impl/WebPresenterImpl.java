@@ -8,7 +8,9 @@ import cn.southtree.ganku.mvp.presenter.interfaces.WebPresenter;
 import cn.southtree.ganku.mvp.view.ui.activity.WebActivity;
 
 /**
- * Created by zhuo.chen on 2018/1/8.
+ * WebView界面
+ * @author zhuo.chen
+ * @version 2018/1/8.
  */
 
 public class WebPresenterImpl extends BasePresenterImpl<WebActivity> implements WebPresenter {

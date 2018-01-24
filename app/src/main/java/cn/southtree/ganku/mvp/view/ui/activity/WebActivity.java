@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -49,6 +50,8 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
     Toolbar toolbar;
     @BindView(R.id.swipe_srl)
     SwipeRefreshLayout swipeSrl;
+    @BindView(R.id.title_tv)
+    TextView titleTv;
 
     private WebSettings mWebSettings;
 
@@ -82,7 +85,8 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
 
         loadUrl = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("name");
-        toolbar.setTitle(title);
+        //toolbar.setTitle(title);
+        titleTv.setText(title);
         if (!StringUtil.isNull(loadUrl)) {
             x5webWv.loadUrl(loadUrl);
 
@@ -138,7 +142,8 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
     @Override
     public void setTitle(String title) {
         if (toolbar != null && !StringUtil.isNull(title)) {
-            toolbar.setTitle(title);
+            //toolbar.setTitle(title);
+            titleTv.setText(title);
         }
     }
 
@@ -205,7 +210,8 @@ public class WebActivity extends BaseActivity<WebPresenterImpl> implements WebV,
             @Override
             public void onReceivedTitle(WebView webView, String s) {
                 if (toolbar != null) {
-                    toolbar.setTitle(s);
+                    //toolbar.setTitle(s);
+                    titleTv.setText(title);
                 }
                 super.onReceivedTitle(webView, s);
             }

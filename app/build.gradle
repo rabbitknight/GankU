@@ -13,7 +13,7 @@ android {
         jackOptions {
             enabled true
         }
-        ndk{abiFilters "armeabi"}
+        ndk { abiFilters "armeabi" }
     }
     buildTypes {
         release {

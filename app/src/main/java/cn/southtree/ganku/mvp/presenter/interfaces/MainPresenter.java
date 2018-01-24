@@ -11,6 +11,7 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
 
 public interface MainPresenter extends IBasePresenter {
     void updateMeizi(ImageView view);
+
     void onConsumeClick(View view);
 
 }

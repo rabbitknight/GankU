@@ -1,8 +1,9 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -11,6 +12,8 @@
 
     <style name="ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxEms">12</item>
     </style>
 
     <style name="CheckBoxStyle">

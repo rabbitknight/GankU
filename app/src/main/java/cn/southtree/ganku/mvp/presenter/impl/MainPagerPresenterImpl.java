@@ -96,31 +96,37 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
 
                     @Override
                     public void onNext(DataBean dataBean) {
-                        view.setList(dataBean.results, false);
-                        String url = App.getmSahre().getString("meizi", "");
-                        if (TextUtils.equals(type, "福利")) {
-                            if (url.equals(dataBean.results.get(0).getUrl())) {
+                        if (null != view && null != dataBean.results && dataBean.results.size() > 0) {
+                            view.setList(dataBean.results, false);
+                            String url = App.getmSahre().getString("meizi", "");
+                            if (TextUtils.equals(type, "福利")) {
+                                if (url.equals(dataBean.results.get(0).getUrl())) {
 
-                            } else {
-                                SharedPreferences.Editor editor = App.getmSahre().edit();
-                                editor.putString("meizi", dataBean.results.get(0).getUrl());
-                                editor.apply();
+                                } else {
+                                    SharedPreferences.Editor editor = App.getmSahre().edit();
+                                    editor.putString("meizi", dataBean.results.get(0).getUrl());
+                                    editor.apply();
+                                }
+                                //view.callBack.setMeizi();
                             }
-
-                            //view.callBack.setMeizi();
                         }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        view.dismissProcess();
+                        if (null != view) {
+                            view.dismissProcess();
+                        }
                     }
 
                     @Override
                     public void onComplete() {
-                        view.setCurrentPage(2);
-                        view.dismissProcess();
+                        if (null != view) {
+                            view.setCurrentPage(2);
+                            view.dismissProcess();
+                        }
                     }
                 });
 
@@ -152,8 +158,8 @@ public class MainPagerPresenterImpl extends BasePresenterImpl<MainPagerFragment>
         }
     }
 
-    @Deprecated
     // 使用Chrome进行显示网页
+    @Deprecated
     private void launchUrl(String url) {
         CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
         intentBuilder.setToolbarColor(ContextCompat.getColor(view.getContext(), R.color.colorMainDark));
