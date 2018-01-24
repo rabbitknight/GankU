@@ -37,11 +37,10 @@
     └─utils				+ utils辅助类，String处理等
 ```
 ### 运行Demo
-1. launcher
-![launcher](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_launcher2.gif?raw=true)
-2. Main
-![main1](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_main1.gif?raw=true)
-3. Main2
-![main2](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_main2.gif?raw=true)
-4. Web
-![web](https://github.com/rabbitknight/GankU/tree/master/gifs/gif_web.gif?raw=true)
+desc|img
+---|---
+launcher|![launcher](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_launcher2.gif?raw=true)
+main|![main1](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_main1.gif?raw=true)
+Main2|![main2](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_main2.gif?raw=true)
+Web|![web](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_web.gif?raw=true)
+----|---
