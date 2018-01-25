@@ -1,5 +1,6 @@
 # GankU
 + 根据[gank.io](http://gank.io/api)公开API实现的内容阅读类App。作为对近期知识内容梳理总结。
+更多参考[个人博客：https://southtree.cn/2018/01/25/A008/#more](https://southtree.cn/2018/01/25/A008/#more)
 ### TL;DR
 技术|概要
 ---|---
