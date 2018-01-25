@@ -74,8 +74,8 @@ Web|![web](https://github.com/rabbitknight/GankU/blob/master/gifs/gif_web.gif?ra
 ```
 ### TODO
 + IMG
- -  ImageViewWrap，手势包装类的优化
- - 妹子图的下载收藏等
+    - ImageViewWrap，手势包装类的优化
+    - 妹子图的下载收藏等
 + Web
 	- CustomTab的集成，获取更好体验
 	- 右上角分享、复制URL等功能
