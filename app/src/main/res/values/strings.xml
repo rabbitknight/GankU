@@ -16,4 +16,8 @@
     <string name="string_about">about</string>
     <string name="string_about_content">略略略</string>
     <string name="string_load">正在加载。。。</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_mark">收藏</string>
+    <string name="menu_copy">复制剪切板</string>
+    <string name="menu_browser">浏览器打开</string>
 </resources>

@@ -9,7 +9,9 @@ import cn.southtree.ganku.mvp.presenter.base.IBasePresenter;
  */
 
 public interface WebPresenter extends IBasePresenter {
-    void changeProgress(int progress);  //更改进度条
+    void changeProgress(int progress);  // 更改进度条
 
-    void onRefresh();                   //刷新
+    void onRefresh();                   // 刷新
+
+    void consumeEvent(int id);
 }

@@ -17,4 +17,8 @@ public interface WebV extends IBaseView {
     void refresh();
 
     void reload();
+
+    String getShareContent();
+
+    void send2Apps(String content, boolean isUrl);
 }

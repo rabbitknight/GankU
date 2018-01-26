@@ -19,6 +19,7 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:navigationIcon="@drawable/ic_close_black_24dp"
+            app:popupTheme="@style/ToolbarPopupTheme"
             >
             <TextView
                 android:id="@+id/title_tv"
